@@ -1,0 +1,112 @@
+\glsdefs@newdocentry{TUI}%
+{%
+name={TUI},%
+sort={TUI},%
+type={main},%
+first={TUI},%
+firstplural={TUIs},%
+text={TUI},%
+plural={TUIs},%
+description={Touristik Union International},%
+descriptionplural={Touristik Union International},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{GitLab}%
+{%
+name={GitLab},%
+sort={GitLab},%
+type={main},%
+first={GitLab},%
+firstplural={GitLabs},%
+text={GitLab},%
+plural={GitLabs},%
+description={Webbasierte Git-Repositories und CI/CD-Plattform},%
+descriptionplural={Webbasierte Git-Repositories und CI/CD-Plattform},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{CI}%
+{%
+name={CI},%
+sort={CI},%
+type={main},%
+first={CI},%
+firstplural={CIs},%
+text={CI},%
+plural={CIs},%
+description={Continuous Integration},%
+descriptionplural={Continuous Integration},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{CD}%
+{%
+name={CD},%
+sort={CD},%
+type={main},%
+first={CD},%
+firstplural={CDs},%
+text={CD},%
+plural={CDs},%
+description={Continuous Deployment},%
+descriptionplural={Continuous Deployment},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+

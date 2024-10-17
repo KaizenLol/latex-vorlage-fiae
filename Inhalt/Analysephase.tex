@@ -1,109 +1,56 @@
 % !TEX root = ../Projektdokumentation.tex
-\section{Analysephase} 
+
+\section{Analysephase}
 \label{sec:Analysephase}
 
-
-\subsection{Ist-Analyse} 
+\subsection{Ist-Analyse}
 \label{sec:IstAnalyse}
-\begin{itemize}
-	\item Wie ist die bisherige Situation (\zB bestehende Programme, Wünsche der Mitarbeiter)?
-	\item Was gilt es zu erstellen/verbessern?
-\end{itemize}
 
+Der bisherige Onboarding-Prozess bei der \ac{TUI} InfoTec GmbH ist größtenteils manuell und somit anfällig für Verzögerungen. Häufig kommt es vor, dass neue Entwickler nicht rechtzeitig in die entsprechenden \hyperlink{MicrosoftTeams}{\textcolor{blue}{Microsoft Teams}} Gruppen und GitLab-Repositories aufgenommen werden, was ihre Integration in das Team verzögert. Dies kann dazu führen, dass wichtige Informationen nicht direkt verfügbar sind oder die Entwickler zu Beginn keinen Zugriff auf essentielle Ressourcen haben. Das führt zu Frustration und Ablenkungen, sowohl für die neuen Entwickler als auch für die verantwortlichen Mitarbeiter, die diese Zugänge nachträglich manuell einrichten müssen. Der manuelle Prozess erfordert ständige Aufmerksamkeit und bindet Zeit, die besser für produktive Aufgaben genutzt werden könnte.
 
 \subsection{Wirtschaftlichkeitsanalyse}
 \label{sec:Wirtschaftlichkeitsanalyse}
-\begin{itemize}
-	\item Lohnt sich das Projekt für das Unternehmen?
-\end{itemize}
 
+Das Projekt zur Automatisierung des Onboardings ist für die \ac{TUI} InfoTec GmbH von großem wirtschaftlichen Nutzen. Die Automatisierung sorgt dafür, dass neue Entwickler sofort Zugriff auf alle relevanten Ressourcen erhalten, ohne dass manuelle Eingriffe notwendig sind. Dadurch werden sowohl Verzögerungen als auch die Gefahr, Mitarbeiter zu übersehen oder Zugänge zu vergessen, deutlich reduziert. Dies steigert nicht nur die Effizienz der neuen Entwickler, sondern entlastet auch das IT-Team, das sich auf wichtigere Aufgaben konzentrieren kann. Durch die Einsparung von Zeit und die Reduktion der Arbeitsunterbrechungen werden langfristig Kosten gesenkt und die Produktivität gesteigert.
 
 \subsubsection{\gqq{Make or Buy}-Entscheidung}
 \label{sec:MakeOrBuyEntscheidung}
-\begin{itemize}
-	\item Gibt es vielleicht schon ein fertiges Produkt, dass alle Anforderungen des Projekts abdeckt?
-	\item Wenn ja, wieso wird das Projekt trotzdem umgesetzt?
-\end{itemize}
 
+Es existieren zwar bereits Softwarelösungen, die Teile des Onboardings automatisieren könnten, jedoch gibt es kein Produkt, das die spezifischen Anforderungen der \ac{TUI} InfoTec GmbH vollständig abdeckt. Besonders die Integration mit den bereits genutzten \hyperlink{GitLabSystemHooks}{\textcolor{blue}{GitLab-SystemHooks}} und die spezifischen Anpassungen, die für die internen Abläufe nötig sind, erfordern eine maßgeschneiderte Lösung. Aus diesem Grund wurde beschlossen, das Projekt intern umzusetzen, um eine optimale Integration in die bestehende Infrastruktur und eine hohe Flexibilität für zukünftige Anpassungen sicherzustellen.
 
 \subsubsection{Projektkosten}
 \label{sec:Projektkosten}
-\begin{itemize}
-	\item Welche Kosten fallen bei der Umsetzung des Projekts im Detail an (\zB Entwicklung, Einführung/Schulung, Wartung)?
-\end{itemize}
 
-\paragraph{Beispielrechnung (verkürzt)}
-Die Kosten für die Durchführung des Projekts setzen sich sowohl aus Personal-, als auch aus Ressourcenkosten zusammen.
-Laut Tarifvertrag verdient ein Auszubildender im dritten Lehrjahr pro Monat \eur{1000} Brutto. 
+Die Kosten, die während der Entwicklung des Projekts anfallen, werden im Folgenden kalkuliert. Die f
+-ür die Realisierung des Projekts benötigten Personal- und Ressourcenkosten sind von der Personalabteilung festgelegte Pauschalsätze, die nicht weiter angepasst werden dürfen. Der Stundensatz eines Auszubildenden beträgt demzufolge 7,56€, der eines Mitarbeiters 25€. Die Ressourcennutzung umfasst einen Büroarbeitsplatz, die Hardware- und Softwarenutzung sowie Stromkosten. Hierfür wird von der Personalabteilung ein pauschaler Stundensatz von 15€ vorgegeben. Die folgende Tabelle zeigt die detaillierten Projektkosten auf, die für die einzelnen Vorgänge anfallen.
 
-\begin{eqnarray}
-8 \mbox{ h/Tag} \cdot 220 \mbox{ Tage/Jahr} = 1760 \mbox{ h/Jahr}\\
-\eur{1000}\mbox{/Monat} \cdot 13,3 \mbox{ Monate/Jahr} = \eur{13300} \mbox{/Jahr}\\
-\frac{\eur{13300} \mbox{/Jahr}}{1760 \mbox{ h/Jahr}} \approx \eur{7,56}\mbox{/h}
-\end{eqnarray}
+\begin{table}[h!]
+    \centering
+    \footnotesize % Kleinere Schriftgröße
+    \renewcommand{\arraystretch}{1.2} % Zeilenhöhe anpassen
+    \setlength{\tabcolsep}{7pt} % Spaltenabstand reduzieren
+    \begin{tabular*}{\textwidth}{|p{2.7cm}|p{3.0cm}|p{1.5cm}|r|r|p{1.9cm}|} % Spaltenbreiten anpassen
+    \hline
+    \textbf{Vorgang}       & \textbf{Mitarbeiter}                 & \textbf{Zeit (h)} & \textbf{Personal (€)\footnotemark[6]} & \textbf{Ressourcen (€)\footnotemark[7]} & \textbf{Gesamt (€)} \\ \hline
+    Entwicklungskosten     & 1 x Auszubildender                  & 80                & 800,00                 & 1.050,00                 & 1.750,00           \\ \hline
+    Fachgespräch           & 2 x Mitarbeiter, \newline 1 x Auszubildender & 3                 & 180,00                 & 135,00                   & 315,00             \\ \hline
+    Code-Review            & 1 x Mitarbeiter                      & 4                 & 100,00                 & 60,00                    & 160,00             \\ \hline
+    Abnahme                & 2 x Mitarbeiter                      & 1                 & 50,00                  & 30,00                    & 80,00              \\ \hline
+    \multicolumn{5}{|r|}{\textbf{Projektkosten gesamt}} & \textbf{2.305,00} \\ \hline
+    \end{tabular*}
+    \caption{Kostenaufstellung}
+    \label{tab:Kostenaufstellung}
+\end{table}
 
-Es ergibt sich also ein Stundenlohn von \eur{7,56}. 
-Die Durchführungszeit des Projekts beträgt 70 Stunden. Für die Nutzung von Ressourcen\footnote{Räumlichkeiten, Arbeitsplatzrechner etc.} wird 
-ein pauschaler Stundensatz von \eur{15} angenommen. Für die anderen Mitarbeiter wird pauschal ein Stundenlohn von \eur{25} angenommen. 
-Eine Aufstellung der Kosten befindet sich in Tabelle~\ref{tab:Kostenaufstellung} und sie betragen insgesamt \eur{2739,20}.
-\tabelle{Kostenaufstellung}{tab:Kostenaufstellung}{Kostenaufstellung.tex}
-
+\footnotetext[6]{Personalkosten pro Vorgang = Anzahl Mitarbeiter $\cdot$ Zeit $\cdot$ Stundensatz.}
+\footnotetext[7]{Ressourcenbeitrag pro Vorgang = Anzahl Mitarbeiter $\cdot$ Zeit $\cdot$ 15 € (Ressourcenbeitrag pro Stunde).}
 
 \subsubsection{Amortisationsdauer}
 \label{sec:Amortisationsdauer}
-\begin{itemize}
-	\item Welche monetären Vorteile bietet das Projekt (\zB Einsparung von Lizenzkosten, Arbeitszeitersparnis, bessere Usability, Korrektheit)?
-	\item Wann hat sich das Projekt amortisiert?
-\end{itemize}
 
-\paragraph{Beispielrechnung (verkürzt)}
-Bei einer Zeiteinsparung von 10 Minuten am Tag für jeden der 25 Anwender und 220 Arbeitstagen im Jahr ergibt sich eine gesamte Zeiteinsparung von 
-\begin{eqnarray}
-25 \cdot 220 \mbox{ Tage/Jahr} \cdot 10 \mbox{ min/Tag} = 55000 \mbox{ min/Jahr} \approx 917 \mbox{ h/Jahr} 
-\end{eqnarray}
-
-Dadurch ergibt sich eine jährliche Einsparung von 
-\begin{eqnarray}
-917 \mbox{h} \cdot \eur{(25 + 15)}{\mbox{/h}} = \eur{36680}
-\end{eqnarray}
-
-Die Amortisationszeit beträgt also $\frac{\eur{2739,20}}{\eur{36680}\mbox{/Jahr}} \approx 0,07 \mbox{ Jahre} \approx 4 \mbox{ Wochen}$.
-
+Das Projekt bringt erhebliche Zeiteinsparungen mit sich, insbesondere für das IT-Team und die neuen Entwickler. Bei einer durchschnittlichen Zeiteinsparung von 10 Minuten pro Tag und 220 Arbeitstagen im Jahr für jeden der 25 Anwender ergibt sich eine jährliche Zeiteinsparung von etwa 917 Stunden. Bei einem kombinierten Stundensatz von \eur{40} (inklusive Mitarbeiter- und Ressourcenkosten) ergibt sich eine jährliche Einsparung von \eur{36.680}. Die Amortisationsdauer des Projekts beträgt somit etwa 4 Wochen, was das Projekt sehr kosteneffizient macht.
 
 \subsection{Nutzwertanalyse}
 \label{sec:Nutzwertanalyse}
-\begin{itemize}
-	\item Darstellung des nicht-monetären Nutzens (\zB Vorher-/Nachher-Vergleich anhand eines Wirtschaftlichkeitskoeffizienten). 
-\end{itemize}
 
-\paragraph{Beispiel}
-Ein Beispiel für eine Entscheidungsmatrix findet sich in Kapitel~\ref{sec:Architekturdesign}: \nameref{sec:Architekturdesign}.
-
-
-\subsection{Anwendungsfälle}
-\label{sec:Anwendungsfaelle}
-\begin{itemize}
-	\item Welche Anwendungsfälle soll das Projekt abdecken?
-	\item Einer oder mehrere interessante (!) Anwendungsfälle könnten exemplarisch durch ein Aktivitätsdiagramm oder eine \ac{EPK} detailliert beschrieben werden. 
-\end{itemize}
-
-\paragraph{Beispiel}
-Ein Beispiel für ein Use Case-Diagramm findet sich im \Anhang{app:UseCase}.
-
-
-\subsection{Qualitätsanforderungen}
-\label{sec:Qualitaetsanforderungen}
-\begin{itemize}
-	\item Welche Qualitätsanforderungen werden an die Anwendung gestellt (\zB hinsichtlich Performance, Usability, Effizienz \etc (siehe \citet{ISO9126}))?
-\end{itemize}
-
-
-\subsection{Lastenheft/Fachkonzept}
-\label{sec:Lastenheft}
-\begin{itemize}
-	\item Auszüge aus dem Lastenheft/Fachkonzept, wenn es im Rahmen des Projekts erstellt wurde.
-	\item Mögliche Inhalte: Funktionen des Programms (Muss/Soll/Wunsch), User Stories, Benutzerrollen
-\end{itemize}
-
-\paragraph{Beispiel}
-Ein Beispiel für ein Lastenheft findet sich im \Anhang{app:Lastenheft}. 
+Neben den monetären Vorteilen bietet das Projekt auch erhebliche nicht-monetäre Vorteile. Die Automatisierung des Onboardings sorgt dafür, dass neue Entwickler sofort Zugriff auf alle relevanten Ressourcen haben, ohne dass Mitarbeiter ständig an das Einrichten von Zugängen erinnert werden müssen. Dies reduziert Ablenkungen und Unterbrechungen im täglichen Arbeitsablauf, was zu einer höheren Produktivität und einer angenehmeren Arbeitsatmosphäre führt. Dadurch wird nicht nur der Einstieg für neue Entwickler erleichtert, sondern auch die Belastung der bestehenden Teams deutlich verringert.

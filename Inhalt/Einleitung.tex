@@ -2,48 +2,60 @@
 \section{Einleitung}
 \label{sec:Einleitung}
 
+Diese Projektdokumentation beschreibt den Ablauf des Projektes „Implementierung automatisierter \hyperlink{Onboarding}{\textcolor{blue}{Onboarding}}- und Ressourcenmanagement-Prozesse zur Optimierung der \hyperlink{UserExperience}{\textcolor{blue}{User Experience}} für neue Entwickler bei \ac{TUI} Group“. 
+
+Die vorliegende Dokumentation wurde projektbegleitend erstellt und dient der Abschlussprüfung im Ausbildungsberuf Fachinformatiker Anwendungsentwicklung. Sie erläutert die Ziele, den Ablauf und die Ergebnisse des Projektes zur Automatisierung des \hyperlink{Onboarding}{\textcolor{blue}{Onboarding}}-Prozesses für neue Entwickler. Des Weiteren werden die eingesetzten Technologien und die Interaktionen mit verschiedenen Systemen beschrieben. 
+
+Die \textcolor{blue}{blau} markierten Begriffe werden nicht direkt im Text erklärt, sondern im angehängten Glossar.
+
 \subsection{Projektumfeld} 
 \label{sec:Projektumfeld}
 
-Die \textbf{TUI InfoTec GmbH} ist eine Tochtergesellschaft der \textbf{TUI AG}, einem weltweit führenden Anbieter im Bereich Tourismus und Reisen. Die TUI InfoTec GmbH ist für die gesamte interne IT-Betreuung der TUI AG zuständig und spielt eine Schlüsselrolle bei der Gestaltung und Optimierung der IT-Infrastruktur sowie der Bereitstellung von Softwarelösungen, die die Geschäftsprozesse innerhalb des TUI-Konzerns unterstützen und effizient gestalten.
+Die \textbf{\hyperlink{TUI}{\textcolor{blue}{TUI}} InfoTec GmbH} ist eine Tochtergesellschaft der \textbf{\hyperlink{TUI}{\textcolor{blue}{TUI}} AG}, einem weltweit führenden Unternehmen im Bereich Tourismus und Reisen. Als interner IT-Dienstleister übernimmt die \hyperlink{TUI}{\textcolor{blue}{TUI}} InfoTec GmbH die IT-Betreuung und -Optimierung für die gesamte \hyperlink{TUI}{\textcolor{blue}{TUI}} AG. Sie ist verantwortlich für die Bereitstellung und Wartung der IT-Infrastruktur sowie für die Entwicklung und Implementierung von Softwarelösungen, die die Geschäftsprozesse innerhalb des Konzerns unterstützen.
 
-Die TUI InfoTec GmbH beschäftigt mehrere hundert Mitarbeiter, die in unterschiedlichen Bereichen der IT tätig sind. Insbesondere konzentriert sich die \textbf{Shared Services Abteilung}, die den Onboarding-Prozess für Entwickler optimieren möchte, auf die Bereitstellung von zentralen IT-Services für alle anderen Abteilungen. Ein bedeutender Teil dieser Aufgabe ist es, den Entwicklern eine optimale Arbeitsumgebung zu schaffen, sodass sie sich auf ihre eigentlichen Aufgaben konzentrieren können, ohne durch wiederkehrende und zeitraubende Aufgaben abgelenkt zu werden. Die Shared Services Abteilung fungiert daher als Projektauftraggeber und hat mir als Projektverantwortlichem den Auftrag erteilt, die Onboarding-Prozesse für Entwickler zu automatisieren.
+Die \hyperlink{TUI}{\textcolor{blue}{TUI}} InfoTec GmbH beschäftigt zurzeit etwas mehr
+als 600 Mitarbeiter, die in unterschiedlichen Bereichen der IT tätig sind.
+Die \textbf{Shared Services Abteilung}, die als Auftraggeber für dieses Projekt fungiert, 
+bietet zentrale IT-Services für verschiedene Abteilungen des Unternehmens an.
+Dabei konzentriert sich diese Abteilung besonders darauf, den Entwicklern eine
+optimale Arbeitsumgebung bereitzustellen, um sie von zeitaufwendigen, wiederkehrenden
+Aufgaben zu entlasten und ihre Produkti-
+vität zu steigern.
 
 \subsection{Projektziel} 
 \label{sec:Projektziel}
 
-Das Ziel dieses Projekts ist die Automatisierung des Onboarding-Prozesses für neue Entwickler innerhalb des Unternehmens. Der derzeitige Onboarding-Prozess ist weitgehend manuell und beinhaltet zeitaufwändige Schritte wie das Hinzufügen neuer Entwickler zu Microsoft Teams Gruppen, das Versenden von E-Mails mit wichtigen Informationen zu internen Prozessen und Dokumentationen sowie das Bereitstellen von Zugang zu GitLab-Repositories und weiteren Entwicklungsressourcen. Diese Aufgaben erfolgen derzeit durch manuelle Eingriffe, die nicht nur Zeit kosten, sondern auch potenziell zu Fehlern führen können, wenn sie nicht korrekt durchgeführt werden.
+Das Ziel dieses Projekts ist es, die Effizienz und \hyperlink{UserExperience}{\textcolor{blue}{User Experience}} beim \hyperlink{Onboarding}{\textcolor{blue}{Onboarding}} neuer Entwickler durch automatisierte Prozesse zu verbessern. Der aktuelle Onboarding-Prozess ist überwiegend manuell und erfordert zeitaufwändige Schritte wie das Hinzufügen neuer Entwickler zu \textbf{\hyperlink{MicrosoftTeams}{\textcolor{blue}{Microsoft Teams}}} Gruppen, das Versenden von E-Mails mit wichtigen Informationen zu internen Prozessen und das Bereitstellen von Zugriffen auf \hyperlink{GitLab}{\textcolor{blue}{GitLab}}-Repositories sowie weitere Entwicklungsressourcen. Diese manu-
+ellen Tätigkeiten sind nicht nur zeitintensiv, sondern bergen auch das Risiko von Fehlern.
 
-Durch das Projekt soll eine Anwendung entwickelt werden, die automatisch auf Ereignisse innerhalb von \textbf{GitLab} reagiert, um neue Entwickler in die relevanten Microsoft Teams Gruppen zu integrieren und ihnen automatisch eine E-Mail mit wichtigen Informationen zu internen Prozessen und Dokumentationen zu senden. Diese Automatisierung soll den Einstieg für neue Entwickler erheblich vereinfachen, ihre Produktivität steigern und gleichzeitig den manuellen Aufwand für das IT-Team minimieren. Das Endziel ist es, eine Lösung zu schaffen, die sowohl den aktuellen Anforderungen gerecht wird als auch skalierbar und erweiterbar ist, um auf zukünftige Anforderungen flexibel reagieren zu können.
+Im Rahmen dieses Projekts wird eine Anwendung entwickelt, die auf \hyperlink{GitLab}{\textcolor{blue}{GitLab}}-Events reagiert und automatisch neue Entwickler in die relevanten \textbf{\hyperlink{MicrosoftTeams}{\textcolor{blue}{Microsoft Teams}}} Gruppen integriert. Zusätzlich werden E-Mails mit zentralen Informationen zu internen Abläufen und Dokumentationsstandorten verschickt, um den Einstieg für neue Entwickler zu erleichtern. Dadurch wird die Produktivität neuer Mitarbeiter gesteigert und gleichzeitig der manuelle Aufwand für das IT-Team deutlich reduziert.
+
+Am Ende des Projekts soll eine Lösung stehen, die sowohl den aktuellen Anforderungen gerecht wird als auch einfach verwaltbar und skalierbar ist, um auf zukünftige Bedürfnisse flexibel reagieren zu können.
 
 \subsection{Projektbegründung} 
 \label{sec:Projektbegruendung}
 
-Der derzeit manuelle Onboarding-Prozess für neue Entwickler ist sowohl zeitaufwendig als auch fehleranfällig. Neue Entwickler werden oft nicht sofort in die richtigen Teams und Kommunikationskanäle integriert und erhalten möglicherweise nicht alle relevanten Informationen zum Einstieg in die Entwicklungsprozesse bei TUI. Dies kann zu Verzögerungen führen, die den Produktivitätseintritt der Entwickler behindern. Ein automatisierter Prozess würde sicherstellen, dass jeder neue Entwickler sofort alle nötigen Ressourcen und Teammitgliedschaften erhält und gleichzeitig unnötige manuelle Arbeit für das IT-Team entfällt.
+Der derzeit manuelle \hyperlink{Onboarding}{\textcolor{blue}{Onboarding}}-Prozess für neue Entwickler ist sowohl zeitaufwendig als auch fehlera-
+nfällig. Neue Entwickler werden oft nicht sofort in die richtigen Teams und Kommunikationskanäle integriert und erhalten möglicherweise nicht alle relevanten Informationen zum Einstieg in die Entwic-
+klungsprozesse bei \hyperlink{TUI}{\textcolor{blue}{TUI}}. Dies kann zu Verzögerungen führen, die den Produktivitätseintritt der Entwic-
+kler behindern. Ein automatisierter Prozess würde sicherstellen, dass jeder neue Entwickler sofort alle nötigen Ressourcen und Teammitgliedschaften erhält und gleichzeitig unnötige manuelle Arbeit für das IT-Team entfällt.
 
-Die Automatisierung des Onboarding-Prozesses bietet somit klare Vorteile:
+Die Automatisierung des \hyperlink{Onboarding}{\textcolor{blue}{Onboarding}}-Prozesses bietet somit klare Vorteile:
 - \textbf{Zeitersparnis}: Die Automatisierung reduziert die Zeit, die das IT-Team für manuelle Aufgaben aufwenden muss. Neue Entwickler können ohne Verzögerung in die relevanten Gruppen aufgenommen und erhalten automatisch alle notwendigen Informationen.
-- \textbf{Fehlerreduktion}: Durch die Automatisierung wird das Risiko von menschlichen Fehlern verringert, die bei manuellen Prozessen auftreten können, wie etwa das Vergessen, einen Entwickler in eine wichtige Gruppe zu integrieren.
 - \textbf{Kosteneffizienz}: Durch die Reduktion des manuellen Aufwands werden nicht nur Fehler vermieden, sondern auch Ressourcen effizienter eingesetzt. Das IT-Team kann seine Kapazitäten für wichtigere Aufgaben nutzen.
 
-Die Motivation hinter dem Projekt ist, die Einarbeitungszeit neuer Entwickler zu verkürzen und gleichzeitig eine höhere Konsistenz und Qualität im Onboarding-Prozess zu gewährleisten. So wird der Einstieg für neue Entwickler erleichtert, und sie können schneller produktiv arbeiten. Gleichzeitig wird die Effizienz des IT-Teams gesteigert, da der manuelle Aufwand durch Automatisierung entfällt.
+Die Motivation hinter dem Projekt ist, die Einarbeitungszeit neuer Entwickler zu verkürzen und gleichzeitig eine höhere Konsistenz und Qualität im \hyperlink{Onboarding}{\textcolor{blue}{Onboarding}}-Prozess zu gewährleisten. So wird der Einstieg für neue Entwickler erleichtert, und sie können schneller produktiv arbeiten. 
 
 \subsection{Projektschnittstellen} 
 \label{sec:Projektschnittstellen}
 
-Die entwickelte Anwendung wird mit mehreren Systemen und Plattformen interagieren, um den Onboarding-Prozess zu automatisieren. Ein zentraler Bestandteil dieser Lösung ist die Integration mit \textbf{GitLab}, da GitLab bei TUI als Hauptplattform für die Versionskontrolle und die kontinuierliche Integration genutzt wird. Die Anwendung wird auf GitLab-Events reagieren, wie zum Beispiel das Hinzufügen eines neuen Entwicklers zu einem Projekt oder das Erstellen eines neuen Repositories, um entsprechende Automatisierungen auszulösen.
+Die entwickelte Anwendung interagiert mit verschiedenen Systemen, um den \hyperlink{Onboarding}{\textcolor{blue}{Onboarding}}-Prozess für neue Entwickler zu automatisieren. Ein zentraler Bestandteil ist die Integration mit \hyperlink{GitLab}{\textcolor{blue}{GitLab}}, das bei \hyperlink{TUI}{\textcolor{blue}{TUI}} sowohl für die Versionskontrolle als auch für \hyperlink{CI}{\textcolor{blue}{Continuous Integration}} und \hyperlink{CD}{\textcolor{blue}{Continuous Deployment}} (CI/CD) genutzt wird. Um die Automatisierung zu ermöglichen, werden \hyperlink{Schnittstelle}{\textcolor{blue}{Schnittstellen}} in der Programmiersprache \hyperlink{Go}{\textcolor{blue}{Go}} entwickelt, die auf \hyperlink{GitLab}{\textcolor{blue}{GitLab}}-Ereignisse reagieren und die entsprechenden Prozesse auslösen.
 
-Zusätzlich wird die Anwendung in \textbf{Microsoft Teams} integriert, da Teams die zentrale Kommunikationsplattform für die Entwickler bei TUI ist. Über Microsoft Teams werden neue Entwickler automatisch in die relevanten Teams-Gruppen aufgenommen, die für die Zusammenarbeit und Kommunikation innerhalb des Projekts erforderlich sind.
+Das Projekt wurde durch den \textbf{Head of Technology} der \textbf{Shared Services Abteilung} genehmigt. Innerhalb der Abteilung standen zudem Mitarbeiter zur Verfügung, um bei Rückfragen zu unterstützen und regelmäßiges Feedback während der Entwicklung zu geben.
 
-Neben GitLab und Microsoft Teams wird auch \textbf{Jira}, das Projektmanagement-Tool bei TUI, eine Rolle spielen, um den Fortschritt des Onboardings zu verfolgen und Aufgaben für neue Entwickler zu erstellen. Jira wird als Schnittstelle verwendet, um sicherzustellen, dass alle Schritte des Onboarding-Prozesses dokumentiert und nachvollziehbar sind.
-
-Der Auftraggeber dieses Projekts ist die \textbf{Shared Services Abteilung} der TUI InfoTec GmbH. Diese Abteilung stellt die finanziellen Mittel sowie die Ressourcen zur Verfügung und ist für die Genehmigung des Projekts zuständig. Das Ergebnis des Projekts wird sowohl dem Auftraggeber als auch dem Entwicklungsteam präsentiert, um sicherzustellen, dass die Lösung den Anforderungen und Erwartungen entspricht.
-
-Die \textbf{Benutzer} der Anwendung sind hauptsächlich die neuen Entwickler, die von der automatisierten Lösung profitieren werden. Die IT-Administratoren und das Entwicklungsteam werden die Lösung zur Verwaltung und Überwachung des Onboarding-Prozesses nutzen.
+Die \textbf{Benutzer} der Anwendung sind neue Entwickler, die automatisch in den \hyperlink{Onboarding}{\textcolor{blue}{Onboarding}}-Prozess integriert werden, um eine reibungslose Einarbeitung und den Zugang zu den erforderlichen Ressourcen zu gewährleisten.
 
 \subsection{Projektabgrenzung} 
 \label{sec:Projektabgrenzung}
 
-Dieses Projekt fokussiert sich ausschließlich auf die Automatisierung des Onboarding-Prozesses für neue Entwickler. Es umfasst nicht die Automatisierung des gesamten IT-Onboarding-Prozesses bei TUI, also beispielsweise nicht die Bereitstellung von Hardware, die Integration in andere nicht entwicklungsrelevante IT-Systeme oder die Verwaltung von Zugriffsrechten für nicht-technische Teams. Diese Aufgaben sind nicht Teil dieses Projekts und würden in separaten Projekten behandelt werden.
-
-Zudem werden in diesem Projekt keine erweiterten Sicherheitsfunktionen wie beispielsweise ein Host-Checker implementiert, um Clients auf Sicherheitslücken zu überprüfen. Solche Funktionen könnten in zukünftigen Projekten als Erweiterungen hinzugefügt werden, sind aber nicht Bestandteil dieses aktuellen Projekts.
+Die aktuelle Refaktorisierung des bestehenden Systems ist nicht Teil dieses Projekts. Zukünftige Anpassungen des aktuellen Systems sind erforderlich, um die \hyperlink{GitLabSystemhooks}{\textcolor{blue}{GitLab-Systemhooks}}, die wir derzeit verwenden, entsprechend zu überarbeiten und anzupassen. Diese Änderungen werden separat behandelt und sind nicht im Rahmen der gegenwärtigen Automatisierungsprojekte enthalten.
