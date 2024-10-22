@@ -5,87 +5,49 @@
 \subsection{Zielplattform}
 \label{sec:Zielplattform}
 
-\begin{itemize}
-	\item Beschreibung der Kriterien zur Auswahl der Zielplattform (\ua Programmiersprache, Datenbank, Client/Server, Hardware).
-\end{itemize}
+Aus der Ist-Analyse ging hervor, dass wir zwei wesentliche Schnittstellen benötigen, um die Anforderungen des Projekts zu erfüllen. Erstens eine \textbf{GitLab System Hook}, die GitLab-Ereignisse an ein \textbf{Amazon Simple Notification Service (SNS)}-Thema sendet. Zweitens eine Anwendung, die spezifische Ereignisse aus einer \textbf{Amazon Simple Queue Service (SQS)}-Warteschlange konsumiert und darauf reagiert, wie z.B. die Verarbeitung von \texttt{user\_create}-Ereignissen. Beide Schnittstellen haben wir in \textbf{Go} entwickelt, um unsere bestehende Expertise zu nutzen und den Entwicklungsprozess zu beschleunigen.
+
+Die Wahl der Programmiersprache \textbf{Go} basiert auf einer Reihe von technischen und praktischen Überlegungen. Da Go die primär in unserer Abteilung verwendete Programmiersprache ist und das Team über umfangreiche Erfahrung damit verfügt, konnten wir die Einarbeitungszeit minimieren und effizient arbeiten.
+
+Für die Bereitstellung der Anwendung haben wir uns für \textbf{Amazon Web Services (AWS)} entschieden. AWS bietet eine breite Palette an Diensten, die unseren Projektanforderungen ideal entsprechen, und ist bereits tief in den Prozessen unseres Unternehmens verankert. Diese Vertrautheit mit AWS ermöglicht eine reibungslose Implementierung und die Nutzung bestehender Best Practices und interner Ressourcen.
+
+Für die zentrale Erfassung und Verarbeitung der GitLab-Systemereignisse nutzen wir \textbf{AWS SNS} in Kombination mit \textbf{AWS SQS}. Der SNS-Dienst sammelt die relevanten GitLab-Ereignisse und verteilt sie über SQS an verschiedene Anwendungen. Diese Architektur garantiert eine skalierbare und effiziente Verarbeitung der Ereignisse.
+
+Für den Versand von E-Mails setzen wir \textbf{AWS Simple Email Service (SES)} ein. Die E-Mails werden mithilfe von HTML und CSS gestaltet, um ansprechende und benutzerfreundliche Inhalte zu erzeugen.
+
+Die Schnittstellen selbst werden in einem bestehenden \textbf{Amazon Elastic Kubernetes Service (EKS)} Cluster bereitgestellt, der bereits für andere Anwendungen in unserer Abteilung genutzt wird. Durch die Wiederverwendung dieser Infrastruktur können wir zusätzliche Ressourcen sparen und den Verwaltungsaufwand minimieren.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[scale=0.5]{final-Architektur.png}
+	\caption{Finaler Entwurf des Infrastruktur-Designs und Soll-Zustand}
+\end{figure}
 
 
+\clearpage
 \subsection{Architekturdesign}
 \label{sec:Architekturdesign}
-\begin{itemize}
-	\item Beschreibung und Begründung der gewählten Anwendungsarchitektur (\zB \acs{MVC}).
-	\item \Ggfs Bewertung und Auswahl von verwendeten Frameworks sowie \ggfs eine kurze Einführung in die Funktionsweise des verwendeten Frameworks.
-\end{itemize}
 
-\paragraph{Beispiel}
-Anhand der Entscheidungsmatrix in Tabelle~\ref{tab:Entscheidungsmatrix} wurde für die Implementierung der Anwendung das \acs{PHP}-Framework Symfony\footnote{\Vgl \citet{Symfony}.} ausgewählt. 
+Für das Projekt  wurde eine \textbf{ereignisgesteuerte Architektur (Event-Driven Architecture)} gewählt. Diese Architektur nutzt lose gekoppelte Microservices, die Informationen durch das Erzeugen und Konsumieren von Ereignissen austauschen. GitLab sendet Systemereignisse über einen System Hook an ein \textbf{AWS SNS}-Topic, von dem aus die Ereignisse an verschiedene \textbf{SQS}-Warteschlangen weitergeleitet werden. Diese asynchrone Kommunikation ermöglicht eine flexible und skalierbare Verarbeitung.
 
-\tabelle{Entscheidungsmatrix}{tab:Entscheidungsmatrix}{Nutzwert.tex}
+Ein in \textbf{Go} geschriebener Service konsumiert die relevanten Ereignisse von der SQS-Warteschlange. Bei bestimmten Ereignissen, wie z.B. \texttt{user\_create}, versendet dieser Service Willkommens-E-Mails über \textbf{AWS SES} und fügt neue Entwickler zu Microsoft Teams hinzu. Filter Policies auf den SQS-Warteschlangen sorgen dafür, dass nur relevante Ereignisse verarbeitet werden. Diese Architektur gewährleistet Skalierbarkeit, Entkopplung und effiziente Ereignisverarbeitung.
 
 
-\subsection{Entwurf der Benutzeroberfläche}
-\label{sec:Benutzeroberflaeche} 
-\begin{itemize}
-	\item Entscheidung für die gewählte Benutzeroberfläche (\zB GUI, Webinterface).
-	\item Beschreibung des visuellen Entwurfs der konkreten Oberfläche (\zB Mockups, Menüführung).
-	\item \Ggfs Erläuterung von angewendeten Richtlinien zur Usability und Verweis auf Corporate Design.
-\end{itemize}
+\subsection{Entwurf der E-Mail}
+\label{sec:Benutzeroberflaeche}
 
-\paragraph{Beispiel}
-Beispielentwürfe finden sich im \Anhang{app:Entwuerfe}.
+Das Design der E-Mail wurde zu Beginn der Entwurfsphase skizzenhaft entworfen, um sicherzustellen, dass sie benutzerfreundlich und einladend wirkt. Besonders wichtig war es, die Informationen so aufzubereiten, dass sie nicht überladen sind und die Empfänger, insbesondere neue Entwickler, schnell und einfach erfassen können. 
 
+Die Gestaltung fokussierte sich auf eine klare und ansprechende Struktur, die dazu einlädt, die E-Mail aufmerksam zu lesen. Durch regelmäßige Rücksprache mit dem Auftraggeber und iteratives Feedback konnte das Design kontinuierlich optimiert werden. Letztlich wurde die E-Mail in HTML und CSS umgesetzt, um eine moderne und einladende Benutzererfahrung zu gewährleisten.
 
-\subsection{Datenmodell}
-\label{sec:Datenmodell}
-
-\begin{itemize}
-	\item Entwurf/Beschreibung der Datenstrukturen (\zB \acs{ERM} und/oder Tabellenmodell, \acs{XML}-Schemas) mit kurzer Beschreibung der wichtigsten (!) verwendeten Entitäten.
-\end{itemize}
-
-\paragraph{Beispiel}
-In \Abbildung{ER} wird ein \ac{ERM} dargestellt, welches lediglich Entitäten, Relationen und die dazugehörigen Kardinalitäten enthält. 
-
-\begin{figure}[htb]
-\centering
-\includegraphicsKeepAspectRatio{ERDiagramm.pdf}{0.6}
-\caption{Vereinfachtes ER-Modell}
-\label{fig:ER}
-\end{figure} 
-
-
-\subsection{Geschäftslogik}
-\label{sec:Geschaeftslogik}
-
-\begin{itemize}
-	\item Modellierung und Beschreibung der wichtigsten (!) Bereiche der Geschäftslogik (\zB mit Kom\-po\-nen\-ten-, Klassen-, Sequenz-, Datenflussdiagramm, Programmablaufplan, Struktogramm, \ac{EPK}).
-	\item Wie wird die erstellte Anwendung in den Arbeitsfluss des Unternehmens integriert?
-\end{itemize}
-
-\paragraph{Beispiel}
-Ein Klassendiagramm, welches die Klassen der Anwendung und deren Beziehungen untereinander darstellt kann im \Anhang{app:Klassendiagramm} eingesehen werden.
-
-\Abbildung{Modulimport} zeigt den grundsätzlichen Programmablauf beim Einlesen eines Moduls als \ac{EPK}.
-\begin{figure}[htb]
-\centering
-\includegraphicsKeepAspectRatio{modulimport.pdf}{0.9}
-\caption{Prozess des Einlesens eines Moduls}
-\label{fig:Modulimport}
-\end{figure}
+Beispielentwurf findet sich im \Anhang{app:Entwuerfe}.
 
 
 \subsection{Maßnahmen zur Qualitätssicherung}
 \label{sec:Qualitaetssicherung}
-\begin{itemize}
-	\item Welche Maßnahmen werden ergriffen, um die Qualität des Projektergebnisses (siehe Kapitel~\ref{sec:Qualitaetsanforderungen}: \nameref{sec:Qualitaetsanforderungen}) zu sichern (\zB automatische Tests, Anwendertests)?
-	\item \Ggfs Definition von Testfällen und deren Durchführung (durch Programme/Benutzer).
-\end{itemize}
+
+Um die Qualität des Projektergebnisses zu sichern, wurden verschiedene Maßnahmen ergriffen. Dazu gehören die Implementierung von Integrationstests und Unit-Tests, die automatisch bei jedem Git-Commit ausgeführt werden. Diese Tests gewährleisten, dass Änderungen am Code keine bestehenden Funktionen beeinträchtigen.
+
+Darüber hinaus fand eine iterative Überprüfung der Codequalität durch erfahrene Mitarbeiter statt. Durch regelmäßige Code-Reviews konnte sichergestellt werden, dass der Code den Qualitätsstandards entspricht und Best Practices eingehalten werden. Diese Kombination aus automatisierten Tests und manuellem Feedback trägt maßgeblich zur hohen Qualität des Projekts bei.
 
 
-\subsection{Pflichtenheft/Datenverarbeitungskonzept}
-\label{sec:Pflichtenheft}
-\begin{itemize}
-	\item Auszüge aus dem Pflichtenheft/Datenverarbeitungskonzept, wenn es im Rahmen des Projekts erstellt wurde.
-\end{itemize}
-
-\paragraph{Beispiel}
-Ein Beispiel für das auf dem Lastenheft (siehe Kapitel~\ref{sec:Lastenheft}: \nameref{sec:Lastenheft}) aufbauende Pflichtenheft ist im \Anhang{app:Pflichtenheft} zu finden.

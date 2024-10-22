@@ -6,7 +6,11 @@
 \subsection{Ist-Analyse}
 \label{sec:IstAnalyse}
 
-Der bisherige Onboarding-Prozess bei der \ac{TUI} InfoTec GmbH ist größtenteils manuell und somit anfällig für Verzögerungen. Häufig kommt es vor, dass neue Entwickler nicht rechtzeitig in die entsprechenden \hyperlink{MicrosoftTeams}{\textcolor{blue}{Microsoft Teams}} Gruppen und GitLab-Repositories aufgenommen werden, was ihre Integration in das Team verzögert. Dies kann dazu führen, dass wichtige Informationen nicht direkt verfügbar sind oder die Entwickler zu Beginn keinen Zugriff auf essentielle Ressourcen haben. Das führt zu Frustration und Ablenkungen, sowohl für die neuen Entwickler als auch für die verantwortlichen Mitarbeiter, die diese Zugänge nachträglich manuell einrichten müssen. Der manuelle Prozess erfordert ständige Aufmerksamkeit und bindet Zeit, die besser für produktive Aufgaben genutzt werden könnte.
+Der bisherige Onboarding-Prozess stellt neue Mitarbeiter vor die Herausforderung, dass zentrale Informationen über interne Prozesse, wie die Standorte von Dokumentationen, eingesetzte Technologien und wichtige Einstiegshilfen, nicht rechtzeitig zur Verfügung stehen. Obwohl wir eine Entwicklerplattform anbieten, auf der alle notwendigen Dokumentationen gesammelt sind, entdecken neue Entwickler diese häufig erst spät. Zudem sind neue Mitarbeiter oft nicht in die relevanten Microsoft Teams-Kanäle integriert, was die Kommunikation und den Zugriff auf wichtige Informationen zusätzlich verzögert.
+
+Da jeder neue Entwickler früher oder später in unserem GitLab-System arbeitet, besteht hier die Chance, den Onboarding-Prozess zu automatisieren. Momentan fehlen jedoch automatisierte Prozesse, die neue Entwickler nahtlos in die vorhandenen Systeme einbinden.
+
+Um dieses Problem zu lösen, haben wir beschlossen, eine GitLab Systemhook zu implementieren, die auf \texttt{user\_create}-Ereignisse lauscht und entsprechend reagiert. Zum Zeitpunkt des Projektbeginns waren bereits drei separate Systemhooks im Einsatz. Daher entschieden wir uns für die Entwicklung einer zentralen Systemhook, die alle GitLab-Ereignisse an ein zentrales \textbf{AWS SNS} Topic (Simple Notification Service) sendet. Von dort aus können verschiedene Anwendungen durch \textbf{SQS} Queues (Simple Queue Service) und spezifische Filterregeln gezielt auf die GitLab-Ereignisse reagieren. Diese Lösung bietet einen zentralen Punkt für GitLab-Ereignisse und ermöglicht es uns, den Onboarding-Prozess effizient zu erweitern und zu automatisieren.
 
 \subsection{Wirtschaftlichkeitsanalyse}
 \label{sec:Wirtschaftlichkeitsanalyse}
@@ -21,8 +25,18 @@ Es existieren zwar bereits Softwarelösungen, die Teile des Onboardings automati
 \subsubsection{Projektkosten}
 \label{sec:Projektkosten}
 
+Die Kosten für die Durchführung des Projekts setzen sich sowohl aus
+Personal-, als auch aus Ressourcenkosten zusammen. Laut Tarifvertrag verdient ein Auszubildender
+im dritten Lehrjahr pro Monat 1450 € Brutto.
+
+\begin{align}
+    8 \, \text{h/Tag} \cdot 220 \, \text{Tage/Jahr} &= 1760 \, \text{h/Jahr} \tag{1}\\
+    1450 \, \text{€/Monat} \cdot 13.3 \, \text{Monate/Jahr} &= 19285 \, \text{€/Jahr} \tag{2}\\
+    \frac{19285 \, \text{€/Jahr}}{1760 \, \text{h/Jahr}} &\approx 10.96 \, \text{€/h} \tag{3}
+\end{align}
+
 Die Kosten, die während der Entwicklung des Projekts anfallen, werden im Folgenden kalkuliert. Die f
--ür die Realisierung des Projekts benötigten Personal- und Ressourcenkosten sind von der Personalabteilung festgelegte Pauschalsätze, die nicht weiter angepasst werden dürfen. Der Stundensatz eines Auszubildenden beträgt demzufolge 7,56€, der eines Mitarbeiters 25€. Die Ressourcennutzung umfasst einen Büroarbeitsplatz, die Hardware- und Softwarenutzung sowie Stromkosten. Hierfür wird von der Personalabteilung ein pauschaler Stundensatz von 15€ vorgegeben. Die folgende Tabelle zeigt die detaillierten Projektkosten auf, die für die einzelnen Vorgänge anfallen.
+-ür die Realisierung des Projekts benötigten Personal- und Ressourcenkosten sind von der Personalabteilung festgelegte Pauschalsätze, die nicht weiter angepasst werden dürfen. Der Stundensatz eines Auszubildenden beträgt demzufolge 10.96€, der eines Mitarbeiters 25€. Die Ressourcennutzung umfasst einen Büroarbeitsplatz, die Hardware- und Softwarenutzung sowie Stromkosten. Hierfür wird von der Personalabteilung ein pauschaler Stundensatz von 15€ vorgegeben. Die folgende Tabelle zeigt die detaillierten Projektkosten auf, die für die einzelnen Vorgänge anfallen.
 
 \begin{table}[h!]
     \centering
