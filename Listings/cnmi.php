@@ -1,122 +1,77 @@
-<?php
-class ComparedNaturalModuleInformation
-{
-	const EMPTY_SIGN = 0;
-	const SIGN_OK = 1;
-	const SIGN_NEXT_STEP = 2;
-	const SIGN_CREATE = 3;
-	const SIGN_CREATE_AND_NEXT_STEP = 4;
-	const SIGN_ERROR = 5;
-	
-	private $naturalModuleInformations = array();
-	
-	public static function environments()
-	{
-		return array("ENTW", "SVNENTW", "QS", "PROD");
-	}
-	
-	public static function signOrder()
-	{
-		return array(self::SIGN_ERROR, self::SIGN_NEXT_STEP, self::SIGN_CREATE_AND_NEXT_STEP, self::SIGN_CREATE, self::SIGN_OK);
+func (h *Hook) handleHook(ctx echo.Context) error {
+	err := validateToken(ctx.Request().Header)
+	if err != nil {
+		h.Logger.Warn("unauthorized access", slog.String("remoteAddr", ctx.Request().RemoteAddr))
+		return ctx.NoContent(http.StatusUnauthorized)
 	}
 
-	public function __construct(array $naturalInformations)
-	{
-		$this->allocateModulesToEnvironments($naturalInformations);
-		$this->allocateEmptyModulesToMissingEnvironments();
-		$this->determineSourceSignsForAllEnvironments();		
+	payload, err := io.ReadAll(ctx.Request().Body)
+	if err != nil {
+		return fmt.Errorf("failed to read all bytes from body: %w", err)
 	}
 
-	private function allocateModulesToEnvironments(array $naturalInformations)
-	{
-		foreach ($naturalInformations as $naturalInformation)
-		{
-			$env = $naturalInformation->getEnvironmentName();
-			if(in_array($env, self::environments()))
-			{
-				$this->naturalModuleInformations[array_search($env, self::environments())] = $naturalInformation;
-			}
-		}		
-	}
-	
-	private function allocateEmptyModulesToMissingEnvironments()
-	{
-		if(array_key_exists(0, $this->naturalModuleInformations))
-		{
-			$this->naturalModuleInformations[0]->setSourceSign(self::SIGN_OK);
-		}
-		
-		for($i = 0;$i < count(self::environments());$i++)
-		{
-			if(!array_key_exists($i, $this->naturalModuleInformations))
-			{
-				$environments = self::environments();
-				$this->naturalModuleInformations[$i] = new EmptyNaturalModuleInformation($environments[$i]);
-				$this->naturalModuleInformations[$i]->setSourceSign(self::SIGN_CREATE);
-			}
-		}
-	}
-	
-	public function determineSourceSignsForAllEnvironments()
-	{
-		for($i = 1; $i < count(self::environments()); $i++)
-		{
-			$currentInformation = $this->naturalModuleInformations[$i];
-			$previousInformation = $this->naturalModuleInformations[$i - 1];
-			if($currentInformation->getSourceSign() <> self::SIGN_CREATE)
-			{
-				if($previousInformation->getSourceSign() <> self::SIGN_CREATE)
-				{
-					if($currentInformation->getHash() <> $previousInformation->getHash())
-					{
-						if($currentInformation->getSourceDate('YmdHis') > $previousInformation->getSourceDate('YmdHis'))
-						{
-							$currentInformation->setSourceSign(self::SIGN_ERROR);
-						}
-						else
-						{
-							$currentInformation->setSourceSign(self::SIGN_NEXT_STEP);
-						}
-					}
-					else
-					{
-						$currentInformation->setSourceSign(self::SIGN_OK);
-					}
-				}
-				else
-				{
-					$currentInformation->setSourceSign(self::SIGN_ERROR);
-				}
-			}
-			elseif($previousInformation->getSourceSign() <> self::SIGN_CREATE && $previousInformation->getSourceSign() <> self::SIGN_CREATE_AND_NEXT_STEP)
-			{
-				$currentInformation->setSourceSign(self::SIGN_CREATE_AND_NEXT_STEP);
-			}
-		}
-	}
+	go h.publishMessage(payload)
 
-	private function containsSourceSign($sign)
-	{
-		foreach($this->naturalModuleInformations as $information)
-		{
-			if($information->getSourceSign() == $sign)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private function containsCatalogSign($sign)
-	{
-		foreach($this->naturalModuleInformations as $information)
-		{
-			if($information->getCatalogSign() == $sign)
-			{
-				return true;
-			}
-		}
-		return false;
-	}	
+	return nil
 }
-?>
+
+
+func (h *Hook) publishMessage(payload []byte) {
+	var event event
+
+	err := json.Unmarshal(payload, &event)
+	if err != nil {
+		h.Logger.Error("failed to unmarshal body", slog.String("error", err.Error()))
+		return
+	}
+
+	h.Logger.Debug("event", slog.Any("event", event))
+	messageAttributes, err := h.createMessageAttributes(event)
+	if err != nil {
+		h.Logger.Error("failed to create message attributes", slog.String("eventName", event.EventName), slog.String("error", err.Error()))
+	}
+
+	input := &sns.PublishInput{
+		Message:           aws.String(string(payload)),
+		TopicArn:          aws.String(os.Getenv("SNS_TOPIC_ARN")),
+		MessageAttributes: messageAttributes,
+	}
+
+	message, err := h.snsClient.Publish(context.Background(), input)
+	if err != nil {
+		h.Logger.Error("error publishing to SNS", slog.String("error", err.Error()))
+		return
+	}
+
+	h.Logger.Info("successfully published message to sns", slog.String("eventName", event.EventName), slog.String("messageId", *message.MessageId))
+	h.Logger.Debug("Published message details",
+		slog.String("messageId", *message.MessageId),
+		slog.String("eventName", event.EventName),
+		slog.String("message", string(payload)),
+		slog.String("Message Attributes", formatMessageAttributes(messageAttributes)),
+	)
+}
+
+func (h *Hook) createMessageAttributes(event event) (map[string]types.MessageAttributeValue, error) {
+	messageAttributes := make(map[string]types.MessageAttributeValue)
+
+	messageAttributes["eventName"] = types.MessageAttributeValue{
+		DataType:    aws.String("String"),
+		StringValue: aws.String(event.EventName),
+	}
+	switch strings.ToLower(event.EventName) {
+	case "user_create":
+		user, _, err := h.gitlab.Users.GetUser(event.UserID, gitlab.GetUsersOptions{}, nil)
+		if err != nil {
+			return nil, fmt.Errorf("failed to get gitlab user: %w", err)
+		}
+		slog.Info("successfully retrieved gitlab user", slog.String("UserName", user.Name))
+		messageAttributes["isBot"] = types.MessageAttributeValue{
+			DataType:    aws.String("String"),
+			StringValue: aws.String(strconv.FormatBool(user.Bot)),
+		}
+		return messageAttributes, nil
+	default:
+		return messageAttributes, nil
+	}
+}

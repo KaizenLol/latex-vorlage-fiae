@@ -1,0 +1,42 @@
+apiVersion: atlas.devops.tui/v1beta1
+kind: Application
+metadata:
+  annotations:
+    appify.devops.tui/version: 1.11.2
+  labels:
+    app: gitlab-to-sns-webhook
+  name: gitlab-to-sns-webhook
+  namespace: onesource
+spec:
+  iamRole: arn:aws:iam::500123565959:role/ehda-test-gitlab-to-sns-webhook
+  image: registry.source.tui/dev-exp/onesource/gitlab-to-sns-webhook:v1.5.1
+  scaling:
+    vertical:
+      enabled: true
+      disruptive: true
+  port: 8443
+  command:
+    - /opt/app/app
+  args: 
+    - -log-level=debug
+    - -listen-address=:8443
+    - -tls-cert-file=/opt/app/volumes/tls/tls.crt 
+    - -tls-key-file=/opt/app/volumes/tls/tls.key
+  env:
+  - name: SNS_TOPIC_ARN
+    value: arn:aws:sns:eu-central-1:500123565959:ehda-test-gitlab-to-sns-webhook
+  - name: GITLAB_URL
+    value: https://test.source.tui
+  - name: GITLAB_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: sns-webhook
+        key: GITLAB_TOKEN
+  secrets:
+  - name: k8s-gitlab-to-sns-webhook
+    source: SecretsManager
+  ingress:
+    host: gitlab-to-sns-webhook.test.devops.tui
+    path: /api
+  metrics:
+    provider: Prometheus

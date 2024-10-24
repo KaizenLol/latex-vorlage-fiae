@@ -4,62 +4,53 @@
 
 Bevor mit der Implementierung begonnen wurde, wurde ein Iterationsplan erstellt. In diesem wurden die einzelnen Schritte und deren Reihenfolge festgelegt. In jeder Iteration wurde eine spezifische Funktionalität umgesetzt und am Ende der jeweiligen Iteration dem Team präsentiert. Dieses Vorgehen folgt den in Abschnitt 2.3 beschriebenen Prinzipien der agilen Softwareentwicklung. Der vollständige Iterationsplan befindet sich im \Anhang{app:Iterationsplan}.
 
-\subsection{Implementierung der Gitlab Systemhook}
-\label{sec:ImplementierungDatenstrukturen}
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[scale=0.5]{systemhookOnly.drawio.png}
-	\caption{Implementierung der Gitlab Systemhook}
-\end{figure}
-
 \subsection{Implementierung der GitLab Systemhook}
 \label{sec:ImplementierungGitlabSystemhook}
 
-Die Implementierung der GitLab Systemhook ermöglicht es, Ereignisse wie das Erstellen neuer Benutzer in GitLab zu erfassen und diese an ein SNS (Simple Notification Service) Topic weiterzuleiten. Der Service empfängt HTTP-POST-Anfragen von GitLab, validiert das Token und verarbeitet die Payload asynchron, um die Performance zu optimieren. 
+Im Rahmen der Implementierung der GitLab Systemhook wurde ein Prozess entwickelt, der es ermöglicht, Ereignisse wie die Erstellung neuer Benutzer in GitLab zu erfassen und an ein SNS (Simple Notification Service) Topic weiterzuleiten. Dabei stand im Vordergrund, die Systemhook effizient, erweiterbar und in der Lage zu gestalten, Echtzeit-Benachrichtigungen für verschiedene GitLab-Ereignisse zu verarbeiten.
 
-Hierfür wurde das \texttt{Echo}-Framework in Kombination mit dem AWS SDK für Go eingesetzt. Zu Beginn wurde der Hook auf der Testumgebung des EKS-Clusters (Elastic Kubernetes Service) implementiert. Nach der erfolgreichen Validierung der Funktionalitäten wurde der Code schließlich in die Produktionsumgebung überführt. 
+\begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.5]{systemhookOnly.drawio.png}
+    \caption{Implementierung der GitLab Systemhook}
+\end{figure}
 
-Ein Beispiel für die Handhabung der eingehenden Hooks ist in Listing~\ref{lst:handleHook} im Anhang zu finden, während die Logik zur Nachrichtenübermittlung an SNS in Listing~\ref{lst:publishMessage} dargestellt wird. Die Implementierung der Umgebungsvariablen und der Authentifizierung erfolgt im Codeabschnitt in Listing~\ref{lst:newHook}. 
+Das \texttt{Hook}-Struct sowie die Initialisierung der erforderlichen Komponenten, wie dem GitLab-Client und dem AWS SNS-Client, wurden gemäß den Anforderungen definiert. Der Endpunkt, an den die HTTP-POST-Anfragen gesendet werden, ist \texttt{/api/v1/hook}. Dieser wird durch die Methode \texttt{handleHook} in der \texttt{Hook}-Struktur verarbeitet, die im Anhang~\ref{app:Test} dargestellt wird. Der Ablauf beginnt mit der Authentifizierung der HTTP-POST-Anfragen durch die Überprüfung des Tokens, um sicherzustellen, dass nur autorisierte Systeme Zugriff auf die Webhook-API erhalten. Codeauschnitte des
+Authentifizierung-
+sprozesses befinden sich im Anhang~\ref{app:CNMI}.
 
-Die gesamte Lösung ermöglicht eine effiziente und skalierbare Verarbeitung von GitLab-Ereignissen und deren gezielte Weiterleitung an AWS SNS, wodurch ein automatisierter Workflow für das Benutzer-Management geschaffen wird.
+Sobald ein GitLab-Ereignis erkannt wurde, erfolgt die Verarbeitung der Payload asynchron. Durch die asynchrone Verarbeitung werden eingehende Anfragen schnell entgegengenommen und weiterverarbeitet, ohne das System zu blockieren. Im nächsten Schritt wird die empfangene Payload an den SNS-Dienst gesendet, wie in Anhang~\ref{app:CNMI} veranschaulicht. Damit die Nachrichten gezielt gefiltert und ausgewertet werden können, werden sogenannte \texttt{MessageAttributes} erstellt. Diese Attribute enthalten Informationen über das jeweilige Ereignis, wie z.B. den Ereignisnamen oder spezifische Merkmale des Benutzers, der das Ereignis ausgelöst hat. Im Falle einer Benutzererstellung wird beispielsweise geprüft, ob der neue Benutzer ein Bot ist, was ebenfalls als Attribut weitergeleitet wird.
 
-\subsection{Implementierung der Nachrichtenzustellung an SNS}
-\label{sec:ImplementierungSNS}
+Die \texttt{MessageAttributes} spielen eine entscheidende Rolle bei der Filterung und ermöglichen eine granulare Weiterleitung von GitLab-Ereignissen. Auf Basis dieser Attribute können spezifische Filter Policies angewendet werden, sodass nur relevante Events an nachgelagerte Systeme oder Prozesse weitergeleitet werden.
 
-Nach Empfang eines GitLab-Ereignisses wird die Nachricht, zusammen mit Attributen wie dem Eventnamen, an ein vordefiniertes SNS Topic gesendet. Ein Attributfilter stellt sicher, dass nur relevante Ereignisse wie \texttt{user\_create} verarbeitet werden. Dadurch wird eine gezielte Filterung und Weiterverarbeitung auf Empfängerseite ermöglicht.
-
-\subsection{Bereitstellung und Test}
-\label{sec:BereitstellungTest}
-
-Der Service wurde zunächst auf einer Testumgebung des EKS-Clusters bereitgestellt. Nach erfolgreicher Validierung der Funktionalitäten erfolgte die Bereitstellung in der Produktionsumgebung. Die Lösung ermöglicht eine skalierbare Verarbeitung von GitLab-Ereignissen und deren Weiterleitung an AWS SNS.
-
-2100 active user
-
-150
-150
 
 
 \subsection{Implementierung des Dev-Kickstarter}
 \label{sec:ImplementierungBenutzeroberflaeche}
 
-\begin{itemize}
-	\item Beschreibung der Implementierung der Benutzeroberfläche, falls dies separat zur Implementierung der Geschäftslogik erfolgt (\zB bei \acs{HTML}-Oberflächen und Stylesheets).
-	\item \Ggfs Beschreibung des Corporate Designs und dessen Umsetzung in der Anwendung.
-	\item Screenshots der Anwendung
-\end{itemize}
+Im Rahmen der Implementierung des Dev-Kickstarter wurde eine robuste Architektur entworfen, die es ermöglicht, verschiedene Benutzerereignisse zu verarbeiten und Aktionen wie das Versenden von Willkommens-E-Mails und das Hinzufügen neuer Benutzer zu Microsoft Teams-Gruppen automatisiert auszuführen.
 
-\paragraph{Beispiel}
-Screenshots der Anwendung in der Entwicklungsphase mit Dummy-Daten befinden sich im \Anhang{Screenshots}.
+\begin{figure}[htb]
+    \centering
+    \includegraphics[scale=0.5]{dev-kickstarterOnly.drawio.png}
+    \caption{Implementierung des Dev-Kickstarter}
+\end{figure}
+
+Das \texttt{Kickstarter}-Struct sowie die Initialisierung der erforderlichen Komponenten, wie dem AWS SES-Client, SQS-Consumer und Microsoft Graph-Client, wurden gemäß den Anforderungen definiert. Der SQS-Consumer empfängt Nachrichten aus einer AWS SQS-Queue, die mit Filter Policies erstellt wurde, um nur relevante Ereignisse zu verarbeiten. Die Definition der \texttt{Kickstarter}-Struktur ist im Anhang~\ref{app:kickStruct} zu finden.
+
+Nach dem Empfang einer Nachricht wird die Payload asynchron verarbeitet. Dabei wird die E-Mail-Adresse des Benutzers extrahiert, um eine Willkommens-E-Mail über den AWS SES-Dienst zu versenden. Der zugehörige Code befindet sich im Anhang~\ref{app:kickMain}. Anschließend wird der Benutzer automatisch zu einer definierten Microsoft Teams-Gruppe hinzugefügt, indem die Microsoft Graph API verwendet wird.
 
 
 \subsection{Implementierung der E-Mail}
 \label{sec:ImplementierungGeschaeftslogik}
 
-\begin{itemize}
-	\item Beschreibung des Vorgehens bei der Umsetzung/Programmierung der entworfenen Anwendung.
-	\item \Ggfs interessante Funktionen/Algorithmen im Detail vorstellen, verwendete Entwurfsmuster zeigen.
-	\item Quelltextbeispiele zeigen.
-	\item Hinweis: Wie in Kapitel~\ref{sec:Einleitung}: \nameref{sec:Einleitung} zitiert, wird nicht ein lauffähiges Programm bewertet, sondern die Projektdurchführung. Dennoch würde ich immer Quelltextausschnitte zeigen, da sonst Zweifel an der tatsächlichen Leistung des Prüflings aufkommen können.
-\end{itemize}
+Die E-Mail wurde als HTML-Dokument erstellt, um sicherzustellen, dass sie auf verschiedenen Endgeräten und E-Mail-Clients korrekt angezeigt wird. Dabei wurde inline CSS verwendet, da viele E-Mail-Clients externe Stylesheets nicht vollständig unterstützen. Dies gewährleistet eine konsistente Darstellung der E-Mail auf allen Plattformen.
+
+Ein wichtiges Merkmal der Implementierung ist die dynamische Personalisierung der Inhalte. Dazu wurde der Platzhalter \texttt{\{\{.FirstName\}\}} eingefügt, um den Vornamen des Empfängers einzufügen. Dieser Wert wird zur Laufzeit gefüllt, indem der Code des Empfängers ausgewertet und der entsprechende Vorname dynamisch in die Vorlage eingefügt wird.
+
+Zusätzlich wurden nützliche Ressourcen und Links in die E-Mail integriert, wie z.B. der Zugriff auf interne TUI-Plattformen wie \textit{Runway} und \textit{OneSource}, um den neuen Teammitgliedern den Einstieg zu erleichtern. Sicherheitsaspekte wurden ebenfalls berücksichtigt, indem Links zu den TUI-Sicherheitsrichtlinien eingebunden wurden. Dies unterstreicht die Wichtigkeit des sicheren Arbeitens innerhalb der Organisation.
+
+Wie die finale E-Mail aussieht, kann im Anhang~A.\ref{app:finalDesign} eingesehen werden.
+
+
 

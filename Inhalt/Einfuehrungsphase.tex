@@ -2,8 +2,22 @@
 \section{Einführungsphase}
 \label{sec:Einfuehrungsphase}
 
-\begin{itemize}
-	\item Welche Schritte waren zum Deployment der Anwendung nötig und wie wurden sie durchgeführt (automatisiert/manuell)?
-	\item Wurden \ggfs Altdaten migriert und wenn ja, wie?
-	\item Wurden Benutzerschulungen durchgeführt und wenn ja, Wie wurden sie vorbereitet?
-\end{itemize}
+\subsection{EKS-Deployment}
+\label{sec:EKSDeployment}
+
+Die GitLab-Systemhook und der Dev-Kickstarter wurden im Rahmen einer automatisierten CI/CD-Pipeline containerisiert und anschließend in die GitLab-Registry hochgeladen. Um die Anwendungen im Kubernetes-Cluster (EKS) bereitzustellen, wurde eine \texttt{yaml}-Konfigurationsdatei erstellt. Diese Datei definiert alle notwendigen Ressourcen und Parameter, wie z.B. die Container-Images, Ports, Umgebungsvariablen und Ingress-Konfigurationen.
+
+Die fertige \texttt{yaml}-Datei wurde dann in ein internes Repository commitet, welches für alle unsere EKS-Deployments verwendet wird. Sobald der Commit erfolgt ist, wird das Deployment im Cluster automatisch ausgelöst und die Anwendungen werden dort bereitgestellt. 
+
+Ein Beispiel für die verwendete \texttt{yaml}-Konfiguration kann im Anhang \ref{app:yamlFile} eingesehen werden.
+
+\subsection{AWS-Deployment}
+\label{sec:AWSDeployment}
+
+Für das AWS-Deployment wurden die erforderlichen Infrastrukturkomponenten in der AWS-Umgebung konfiguriert. Dazu gehören Amazon SNS (Simple Notification Service) zur Kommunikation und Amazon SQS (Simple Queue Service) zur Nachrichtenverarbeitung. 
+
+Die Bereitstellung dieser Ressourcen erfolgte mithilfe von Infrastructure as Code (IaC) mit Terraform. Dabei wurden SNS-Topics und SQS-Queues eingerichtet, um die Kommunikation zwischen den Diensten zu ermöglichen. Eine Filter-Policy wurde verwendet, um sicherzustellen, dass nur spezifische Ereignisse, wie das Erstellen eines Benutzers (eventName: \texttt{user\_create}), an die SQS-Queue weitergeleitet werden. 
+
+Zusätzlich wurde eine IAM-Policy erstellt, die dem Dev-Kickstarter die erforderlichen Berechtigungen gewährt, um E-Mails über Amazon SES (Simple Email Service) zu senden und Nachrichten aus der SQS-Queue zu empfangen. 
+
+Die Terraform-Ressourcen sind in einem internen Repository gespeichert. Ein Beispiel für die verwendeten Terraform-Ressourcen kann im Anhang \ref{app:terraform} eingesehen werden.
