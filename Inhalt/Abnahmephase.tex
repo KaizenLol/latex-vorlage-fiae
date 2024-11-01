@@ -2,10 +2,8 @@
 \section{Abnahmephase} 
 \label{sec:Abnahmephase}
 
-\begin{itemize}
-	\item Welche Tests (\zB Unit-, Integrations-, Systemtests) wurden durchgeführt und welche Ergebnisse haben sie geliefert (\zB Logs von Unit Tests, Testprotokolle der Anwender)?
-	\item Wurde die Anwendung offiziell abgenommen?
-\end{itemize}
+Vor der Endabnahme wurden umfangreiche Tests durchgeführt, um die Qualität der Anwendung sicherzustellen. Unit-Tests prüften die Funktionalität einzelner Codebestandteile isoliert, deren Logs im \Anhang{app:Test} zu finden sind. Integrationstests überprüften, ob die einzelnen Module korrekt zusammenarbeiten und die definierten Schnittstellen erfolgreich miteinander kommunizieren.
 
-\paragraph{Beispiel}
-Ein Auszug eines Unit Tests befindet sich im \Anhang{app:Test}. Dort ist auch der Aufruf des Tests auf der Konsole des Webservers zu sehen.
+Nachdem die Anwendung fertiggestellt war, konnte sie zur Endabnahme dem Fachbereich vorgelegt werden. Durch die agile Entwicklungsmethode hatte der Fachbereich nach jeder Iteration Zugriff auf aktuelle Versionen der Anwendung und konnten so frühzeitig Feedback geben. Diese regelmäßigen Rücksprachen führten nicht nur zu einer vertrauten Nutzung, sondern auch zu einem tiefen Verständnis der Funktionsweise des Gesamtsystems. Anregungen und Kritik konnten direkt während der Entwicklung berücksichtigt werden, wodurch bereits viele Probleme frühzeitig behoben werden konnten.
+
+Da die Fachbereiche die Anwendung bereits gut kannten, verlief die Endabnahme reibungslos. Zur zusätzlichen Qualitätssicherung wurde vor dem Deployment ein \hyperlink{CodeReview}{\textcolor{AOBlau}{Code Review}} durch einen weiteren Entwickler durchgeführt, und die Einführung der Anwendung konnte erfolgreich abgeschlossen werden.

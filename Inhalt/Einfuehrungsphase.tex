@@ -5,19 +5,19 @@
 \subsection{EKS-Deployment}
 \label{sec:EKSDeployment}
 
-Die GitLab-Systemhook und der Dev-Kickstarter wurden im Rahmen einer automatisierten CI/CD-Pipeline containerisiert und anschließend in die GitLab-Registry hochgeladen. Um die Anwendungen im Kubernetes-Cluster (EKS) bereitzustellen, wurde eine \texttt{yaml}-Konfigurationsdatei erstellt. Diese Datei definiert alle notwendigen Ressourcen und Parameter, wie z.B. die Container-Images, Ports, Umgebungsvariablen und Ingress-Konfigurationen.
+Die \hyperlink{GitLabSystemhooks}{\textcolor{AOBlau}{GitLab-Systemhook}} und der Dev-Kickstarter wurden im Rahmen einer automatisierten \hyperlink{CI}{\textcolor{AOBlau}{CI/CD}}-Pipeline containerisiert und anschließend in die \hyperlink{GitLab}{\textcolor{AOBlau}{GitLab-Registry}} hochgeladen. Um die Anwendungen im \hyperlink{EKS}{\textcolor{AOBlau}{Kubernetes-Cluster (EKS)}} bereitzustellen, wurde eine \hyperlink{YAML}{\textcolor{AOBlau}{yaml}}-Konfigurationsdatei erstellt. Diese Datei definiert alle notwendigen Ressourcen und Parameter, wie z.B. die \hyperlink{ContainerImage}{\textcolor{AOBlau}{Container-Images}}, \hyperlink{Ports}{\textcolor{AOBlau}{Ports}}, \hyperlink{Umgebungsvariablen}{\textcolor{AOBlau}{Umgebungsvariablen}} und \hyperlink{KubernetesIngress}{\textcolor{AOBlau}{Ingress-Konfigurationen}}.
 
-Die fertige \texttt{yaml}-Datei wurde dann in ein internes Repository commitet, welches für alle unsere EKS-Deployments verwendet wird. Sobald der Commit erfolgt ist, wird das Deployment im Cluster automatisch ausgelöst und die Anwendungen werden dort bereitgestellt. 
+Die fertige \hyperlink{GitCommit}{\textcolor{AOBlau}{yaml}}-Datei wurde dann in ein internes Repository commitet, welches für alle unsere EKS-Deployments verwendet wird. Sobald der \hyperlink{GitCommit}{\textcolor{AOBlau}{Commit}} erfolgt ist, wird das Deployment im Cluster automatisch ausgelöst und die Anwendungen werden dort bereitgestellt. 
 
-Ein Beispiel für die verwendete \texttt{yaml}-Konfiguration kann im Anhang \ref{app:yamlFile} eingesehen werden.
+Ein Beispiel für die verwendete \hyperlink{YAML}{\textcolor{AOBlau}{yaml}}-Konfiguration kann im \Anhang{app:yamlFile} eingesehen werden.
 
 \subsection{AWS-Deployment}
 \label{sec:AWSDeployment}
 
-Für das AWS-Deployment wurden die erforderlichen Infrastrukturkomponenten in der AWS-Umgebung konfiguriert. Dazu gehören Amazon SNS (Simple Notification Service) zur Kommunikation und Amazon SQS (Simple Queue Service) zur Nachrichtenverarbeitung. 
+Für das AWS-Deployment wurden die erforderlichen Infrastrukturkomponenten in der AWS-Umgebung konfiguriert. Dazu gehören \hyperlink{SNS}{\textcolor{AOBlau}{Amazon SNS}} zur Kommunikation und \hyperlink{SQS}{\textcolor{AOBlau}{Amazon SQS}} zur Nachrichtenverarbeitung. 
 
-Die Bereitstellung dieser Ressourcen erfolgte mithilfe von Infrastructure as Code (IaC) mit Terraform. Dabei wurden SNS-Topics und SQS-Queues eingerichtet, um die Kommunikation zwischen den Diensten zu ermöglichen. Eine Filter-Policy wurde verwendet, um sicherzustellen, dass nur spezifische Ereignisse, wie das Erstellen eines Benutzers (eventName: \texttt{user\_create}), an die SQS-Queue weitergeleitet werden. 
+Die Bereitstellung dieser Ressourcen erfolgte mithilfe von \hyperlink{InfrastructureAsCode}{\textcolor{AOBlau}{Infrastructure as Code}} mit \hyperlink{Terraform}{\textcolor{AOBlau}{Terraform}}.\footnote{Spacelift - Infrastructure as Code, \cite{Iac}.} Dabei wurden \hyperlink{SNS}{\textcolor{AOBlau}{SNS-Topics}} und \hyperlink{SQS}{\textcolor{AOBlau}{SQS-Queues}} eingerichtet, um die Kommunikation zwischen den Diensten zu ermöglichen. Eine \hyperlink{FilterPolicies}{\textcolor{AOBlau}{Filter-Policy}} wurde verwendet, um sicherzustellen, dass nur spezifische Ereignisse, wie das Erstellen eines Benutzers (eventName: \texttt{user\_create}), an die \hyperlink{SQS}{\textcolor{AOBlau}{SQS-Queue}} weitergeleitet werden. 
 
-Zusätzlich wurde eine IAM-Policy erstellt, die dem Dev-Kickstarter die erforderlichen Berechtigungen gewährt, um E-Mails über Amazon SES (Simple Email Service) zu senden und Nachrichten aus der SQS-Queue zu empfangen. 
+Zusätzlich wurde eine \hyperlink{SES}{\textcolor{AOBlau}{IAM-Policy}} erstellt, die dem Dev-Kickstarter die erforderlichen Berechtigungen gewährt, um E-Mails über \hyperlink{SES}{\textcolor{AOBlau}{Amazon SES}} zu senden und Nachrichten aus der \hyperlink{SQS}{\textcolor{AOBlau}{SQS-Queue}} zu empfangen. 
 
-Die Terraform-Ressourcen sind in einem internen Repository gespeichert. Ein Beispiel für die verwendeten Terraform-Ressourcen kann im Anhang \ref{app:terraform} eingesehen werden.
+Die \hyperlink{Terraform}{\textcolor{AOBlau}{Terraform}}-Ressourcen sind in einem internen Repository gespeichert. Ein Beispiel für die verwendeten \hyperlink{Terraform}{\textcolor{AOBlau}{Terraform}}-Ressourcen kann im \Anhang{app:terraform} eingesehen werden.

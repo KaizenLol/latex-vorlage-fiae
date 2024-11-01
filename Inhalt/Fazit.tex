@@ -1,33 +1,52 @@
-% !TEX root = ../Projektdokumentation.tex
 \section{Fazit} 
 \label{sec:Fazit}
 
 \subsection{Soll-/Ist-Vergleich}
 \label{sec:SollIstVergleich}
 
-\begin{itemize}
-	\item Wurde das Projektziel erreicht und wenn nein, warum nicht?
-	\item Ist der Auftraggeber mit dem Projektergebnis zufrieden und wenn nein, warum nicht?
-	\item Wurde die Projektplanung (Zeit, Kosten, Personal, Sachmittel) eingehalten oder haben sich Abweichungen ergeben und wenn ja, warum?
-	\item Hinweis: Die Projektplanung muss nicht strikt eingehalten werden. Vielmehr sind Abweichungen sogar als normal anzusehen. Sie müssen nur vernünftig begründet werden (\zB durch Änderungen an den Anforderungen, unter-/überschätzter Aufwand).
-\end{itemize}
+Bei einer rückblickenden Betrachtung des Projekts lässt sich festhalten, dass die festgelegten Anforderungen weitgehend erreicht wurden. Alle wesentlichen Funktionen und Anpassungen wurden gemäß den definierten Zielen und Anforderungen umgesetzt, insbesondere die Integration mit den \hyperlink{GitLabSystemhooks}{\textcolor{AOBlau}{GitLab-SystemHooks}} und die notwendigen Anpassungen für die internen Abläufe.
 
-\paragraph{Beispiel (verkürzt)}
-Wie in Tabelle~\ref{tab:Vergleich} zu erkennen ist, konnte die Zeitplanung bis auf wenige Ausnahmen eingehalten werden.
-\tabelle{Soll-/Ist-Vergleich}{tab:Vergleich}{Zeitnachher.tex}
+Die Projektplanung konnte insgesamt eingehalten werden, obwohl kleinere Abweichungen in einzelnen Phasen auftraten. So war in der Dokumentationsphase ein Mehraufwand erforderlich, während die Test- und Kontrollphase weniger Zeit in Anspruch nahm. Diese Abweichungen konnten innerhalb des geplanten Zeitrahmens ausgeglichen werden, sodass das Projekt planmäßig abgeschlossen werden konnte. Die folgende Tabelle zeigt den Soll-/Ist-Vergleich der Projektphasen:
 
+\begin{table}[h]
+\centering
+\caption{Soll-/Ist-Vergleich}
+\label{tab:Vergleich}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Projektphase} & \textbf{Geplante Zeit} & \textbf{Tatsächliche Zeit} & \textbf{Differenz} \\
+\hline
+Analysephase & 6 h & 6 h & 0 h \\
+\hline
+Entwurfsphase & 6 h & 6 h & 0 h \\
+\hline
+Implementierungsphase & 34 h & 34 h & 0 h \\
+\hline
+Test- und Kontrollphase & 18 h & 16 h & -2 h \\
+\hline
+Dokumentation + Nachbearbeitung & 6 h & 8 h & +2 h \\
+\hline
+Erstellen der Projektdokumentation und Präsentation & 8 h & 10 h & +2 h \\
+\hline
+Pufferzeit & 2 h & 0 h & -2 h \\
+\hline
+\textbf{Gesamt} & \textbf{80 h} & \textbf{80 h} & \textbf{0 h} \\
+\hline
+\end{tabular}
+\end{table}
+
+Der Auftraggeber zeigte sich mit dem Projektergebnis zufrieden, da alle zentralen Anforderungen erfüllt und interne Abläufe optimiert wurden.
 
 \subsection{Lessons Learned}
 \label{sec:LessonsLearned}
 
-\begin{itemize}
-	\item Was hat der Prüfling bei der Durchführung des Projekts gelernt (\zB Zeitplanung, Vorteile der eingesetzten Frameworks, Änderungen der Anforderungen)?
-\end{itemize}
+Im Verlauf des Projekts konnten wertvolle Erfahrungen gesammelt werden, insbesondere hinsichtlich der effizienten Planung und Einhaltung von Projektphasen in einem agilen Umfeld. Die kontinuierliche Rücksprache mit dem Fachbereich erwies sich als entscheidend für die erfolgreiche Umsetzung der Projektanforderungen. Auch die Anwendung der \hyperlink{agil}{\textcolor{AOBlau}{agilen}} Entwicklungsweise und die regelmäßige Einbeziehung der Endnutzer sorgten für eine zielgerichtete und bedarfsorientierte Entwicklung.
 
+Durch den Einsatz spezifischer Frameworks und Entwicklungswerkzeuge konnten verschiedene Optimierungen realisiert werden, die den Entwicklungsprozess beschleunigten. Die regelmäßigen Iterationen halfen zudem, potenzielle Herausforderungen frühzeitig zu identifizieren und anzupassen.
 
 \subsection{Ausblick}
 \label{sec:Ausblick}
 
-\begin{itemize}
-	\item Wie wird sich das Projekt in Zukunft weiterentwickeln (\zB geplante Erweiterungen)?
-\end{itemize}
+Obwohl alle definierten Anforderungen im Projekt umgesetzt wurden, gibt es Potenzial für zukünftige Erweiterungen. Eine mögliche Weiterentwicklung wäre die Ergänzung zusätzlicher Schnittstellen, um eine automatisierte Anbindung weiterer interner Systeme zu ermöglichen. Auch die Weiterentwicklung der bestehenden Funktionen für eine noch tiefere Integration in die vorhandene Infrastruktur wäre sinnvoll.
+
+Aufgrund des modularen Aufbaus der Anwendung, wie im Abschnitt \ref{sec:Architekturdesign} beschrieben, können diese Anpassungen und Erweiterungen problemlos vorgenommen werden. Der flexible Aufbau der Anwendung gewährleistet somit eine gute Wartbarkeit und Erweiterbarkeit für zukünftige Anforderungen.
