@@ -8,42 +8,42 @@
 
 Der bisherige \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboarding}}-Prozess stellt neue Mitarbeiter vor die Herausforderung, dass zentrale Informationen über interne Prozesse, wie die Standorte von Dokumentationen, eingesetzte Technologien und wichtige Einstiegshilfen, nicht rechtzeitig zur Verfügung stehen. Obwohl wir eine Entwicklerplattform anbieten, auf der alle notwendigen Dokumentationen gesammelt sind, entdecken neue Entwickler diese häufig erst spät. Zudem sind neue Mitarbeiter oft nicht in die relevanten Microsoft Teams-Kanäle integriert, was die Kommunikation und den Zugriff auf wichtige Informationen zusätzlich verzögert.
 
-Da jeder neue Entwickler früher oder später in unserem \hyperlink{GitLab}{\textcolor{AOBlau}{GitLab}}-System arbeitet, besteht hier die Chance, den \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboarding}}-Prozess zu automatisieren. Momentan fehlen jedoch automatisierte Prozesse, die neue Entwickler nahtlos in die vorhandenen Systeme einbinden.
+Da jeder neue Entwickler früher oder später in unserem \hyperlink{GitLab}{\textcolor{AOBlau}{GitLab}} System arbeitet, besteht hier die Chance, den \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboarding}}-Prozess zu automatisieren. Momentan fehlen jedoch automatisierte Prozesse, die neue Entwickler nahtlos in die vorhandenen Systeme einbinden.
 
-Um dieses Problem zu lösen, haben wir beschlossen, eine \hyperlink{GitLabSystemhooks}{\textcolor{AOBlau}{GitLab Systemhook}} zu implementieren, die auf \texttt{user\_create}-Events lauscht und entsprechend reagiert. Zum Zeitpunkt des Projektbeginns waren bereits drei separate Systemhooks im Einsatz. Daher entschieden wir uns für die Entwicklung einer zentralen Systemhook, die alle \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} an ein zentrales \hyperlink{SNS}{\textcolor{AOBlau}{AWS SNS Topic}} (Simple Notification Service) sendet. Von dort aus können verschiedene Anwendungen durch \hyperlink{SQS}{\textcolor{AOBlau}{SQS Queues}} (Simple Queue Service) und spezifische Filterregeln gezielt auf die \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} reagieren. Diese Lösung bietet einen zentralen Punkt für \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} und ermöglicht es uns, den \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboarding}}-Prozess effizient zu erweitern und zu automatisieren.
+Um dieses Problem zu lösen, haben wir beschlossen, eine \hyperlink{GitLabSystemhooks}{\textcolor{AOBlau}{GitLab-Systemhook}} zu implementieren, die auf \texttt{user\_create} Events lauscht und entsprechend reagiert. Zum Zeitpunkt des Projektbeginns waren bereits drei separate \hyperlink{GitLabSystemhooks}{\textcolor{AOBlau}{Systemhooks}} im Einsatz. Daher entschieden wir uns für die Entwicklung einer zentralen \hyperlink{GitLabSystemhooks}{\textcolor{AOBlau}{Systemhook}}, die alle \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} an ein zentrales \hyperlink{SNS}{\textcolor{AOBlau}{AWS SNS Topic}} (Simple Notification Service) sendet. Von dort aus können verschiedene Anwendungen durch \hyperlink{SQS}{\textcolor{AOBlau}{SQS Queues}} (Simple Queue Service) und spezifische Filterregeln gezielt auf die \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} reagieren. Diese Lösung bietet einen zentralen Punkt für \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} und ermöglicht es uns, den \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboarding}}-Prozess effizient zu erweitern und zu automatisieren.
 
 
 \subsection{Wirtschaftlichkeitsanalyse}
 \label{sec:Wirtschaftlichkeitsanalyse}
 
-Das Projekt zur Automatisierung des \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboardings}} ist für die \ac{TUI} InfoTec GmbH von großem wirtschaftlichen Nutzen. Die Automatisierung sorgt dafür, dass neue Entwickler sofort Zugriff auf alle relevanten Ressourcen erhalten, ohne dass manuelle Eingriffe notwendig sind. Dadurch werden sowohl Verzögerungen als auch die Gefahr, Mitarbeiter zu übersehen oder Zugänge zu vergessen, deutlich reduziert. Dies steigert nicht nur die Effizienz der neuen Entwickler, sondern entlastet auch das IT-Team, das sich auf wichtigere Aufgaben konzentrieren kann. Durch die Einsparung von Zeit und die Reduktion der Arbeitsunterbrechungen werden langfristig Kosten gesenkt und die Produktivität gesteigert.
+Das Projekt zur Automatisierung des \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboardings}} ist für die TUI Group von großem wirtschaftlichen Nutzen. Die Automatisierung sorgt dafür, dass neue Entwickler sofort Zugriff auf alle relevanten Ressourcen erhalten, ohne dass manuelle Eingriffe notwendig sind. Dadurch werden sowohl Verzögerungen als auch die Gefahr, Mitarbeiter zu übersehen oder Zugänge zu vergessen, deutlich reduziert. Dies steigert nicht nur die Effizienz der neuen Entwickler, sondern entlastet auch das IT-Team, das sich auf wichtigere Aufgaben konzentrieren kann. Durch die Einsparung von Zeit und die Reduktion der Arbeitsunterbrechungen werden langfristig Kosten gesenkt und die Produktivität gesteigert.
 
 \subsubsection{\gqq{Make or Buy}-Entscheidung}
 \label{sec:MakeOrBuyEntscheidung}
 
-Es existiert keine fertige Softwarelösung, die die spezifischen Anforderungen der \ac{TUI} InfoTec GmbH vollständig abdeckt. Besonders die Integration mit den bereits genutzten \hyperlink{GitLabSystemHooks}{\textcolor{AOBlau}{GitLab-SystemHooks}} und die spezifischen Anpassungen, die für die internen Abläufe notwendig sind, erfordern eine stark angepasste, maßgeschneiderte Lösung. Aus diesem Grund wurde entschieden, das Projekt intern umzusetzen, um eine optimale Integration in die bestehende Infrastruktur sowie eine hohe Flexibilität für zukünftige Anpassungen sicherzustellen.
+Es existiert keine fertige Softwarelösung, die die spezifischen Anforderungen der TUI Group vollständig abdeckt. Besonders die Integration mit den bereits genutzten \hyperlink{GitLabSystemHooks}{\textcolor{AOBlau}{GitLab-Systemhooks}} und die spezifischen Anpassungen, die für die internen Abläufe notwendig sind, erfordern eine stark angepasste, maßgeschneiderte Lösung. Aus diesem Grund wurde entschieden, das Projekt intern umzusetzen, um eine optimale Integration in die bestehende Infrastruktur sowie eine hohe Flexibilität für zukünftige Anpassungen sicherzustellen.
 
 \subsubsection{Projektkosten}
 \label{sec:Projektkosten}
 
-Die Kosten für die Durchführung des Projekts setzen sich aus Personal- und Ressourcenkosten zusammen. Ein Auszubildender im dritten Lehrjahr verdient laut Tarifvertrag monatlich 1450 € brutto, was einem Stundenlohn von etwa 10,96 € entspricht:
+Die Kosten für die Durchführung des Projekts setzen sich aus Personal- und Ressourcenkosten zusammen. Bei der Berechnung des Stundensatzes sowohl für Auszubildende als auch für Senior Entwickler werden Arbeitgeberanteile und Sozialversicherungen berücksichtigt, um den tatsächlichen Stundensatz realistisch darzustellen.
+\newline
+Ein Auszubildender im dritten Lehrjahr verdient laut Tarifvertrag monatlich 1450 € brutto, was einem Stundenlohn von etwa 10,96 € entspricht:
 
 \begin{align}
-    8 \, \text{h/Tag} \cdot 220 \, \text{Tage/Jahr} &= 1760 \, \text{h/Jahr} \tag{1}\\
-    1450 \, \text{€/Monat} \cdot 13.3 \, \text{Monate/Jahr} &= 19285 \, \text{€/Jahr} \tag{2}\\
-    \frac{19285 \, \text{€/Jahr}}{1760 \, \text{h/Jahr}} &\approx 10.96 \, \text{€/h} \tag{3}
+    \frac{(1486 \, \text{€} \cdot 1.21)}{20 \, \text{Tage/Monat} \cdot 7.7 \, \text{Stunden/Tag}} &= \frac{1.798.06 \, \text{€/Monat}}{154 \, \text{Stunden/Monat}} \tag{1} \\
+    &\approx 11,68 \, \text{€/Stunde} \tag{2}
 \end{align}
+
 
 Für die Mitarbeit eines Senior Entwicklers, der für Fachgespräche konsultiert wurde, wird ein monatliches Gehalt von 6069 € zugrunde gelegt, was einem Stundenlohn von etwa 45,86 € ergibt:
 
 \begin{align}
-    6069 \, \text{€/Monat} \cdot 13.3 \, \text{Monate/Jahr} &= 80.717,7 \, \text{€/Jahr} \tag{1}\\
-    \frac{80.717,7 \, \text{€/Jahr}}{1760 \, \text{h/Jahr}} &\approx 45,86 \, \text{€/h} \tag{2}
+    \frac{(6069 \, \text{€} \cdot 1,21)}{20 \, \text{Tage/Monat} \cdot 7.7 \, \text{Stunden/Tag}} &= \frac{7.343,49 \, \text{€/Monat}}{154 \, \text{Stunden/Monat}} \tag{1} \\
+    &\approx 47,69 \, \text{€/Stunde} \tag{2}
 \end{align}
 
-Zusätzlich werden pauschale Ressourcenkosten von 15 € pro Stunde für die Nutzung von Büroarbeitsplätzen, Hardware, Software und Strom angesetzt. Die folgenden Abschnitte zeigen die detaillierten Projektkosten für die einzelnen Vorgänge.
-sierung des Projekts benötigten Personal- und Ressourcenkosten sind von der Personalabteilung festgelegte Pauschalsätze, die nicht weiter angepasst werden dürfen. Der Stundensatz eines Auszubildenden beträgt demzufolge 10.96€, der eines Senior Entwicklers 45,86€. Die Ressourcennutzung umfasst einen Büroarbeitsplatz, die Hardware- und Softwarenutzung sowie Stromkosten. Hierfür wird von der Personalabteilung ein pauschaler Stundensatz von 15€ vorgegeben. Die folgende Tabelle zeigt die detaillierten Projektkosten auf, die für die einzelnen Vorgänge anfallen.
-
+Zusätzlich zu den Personalkosten werden pauschale Ressourcenkosten von 15 € pro Stunde berücksichtigt, um die Nutzung von Büroarbeitsplätzen, Hardware, Software und Strom abzudecken. Der Stundensatz für einen Auszubildenden beläuft sich auf 10,96 €, während der eines Senior Entwicklers 45,86 € beträgt. Für die Ressourcennutzung wird ein einheitlicher Stundensatz von 15 € angesetzt. Die nachfolgende Tabelle zeigt eine detaillierte Übersicht der Projektkosten für die einzelnen Arbeitsschritte.
 \begin{table}[h!]
     \centering
     \footnotesize % Kleinere Schriftgröße
@@ -52,11 +52,11 @@ sierung des Projekts benötigten Personal- und Ressourcenkosten sind von der Per
     \begin{tabular*}{\textwidth}{|p{2.7cm}|p{3.0cm}|p{1.5cm}|r|r|p{1.9cm}|} % Spaltenbreiten anpassen
     \hline
     \textbf{Vorgang}       & \textbf{Mitarbeiter}                 & \textbf{Zeit (h)} & \textbf{Personal (€)\footnotemark[6]} & \textbf{Ressourcen (€)\footnotemark[7]} & \textbf{Gesamt (€)} \\ \hline
-    Entwicklungskosten     & 1 x Auszubildender                  & 80                & 800,00                 & 1.050,00                 & 1.750,00           \\ \hline
-    Fachgespräch           & 2 x Senior Entwickler\newline 1 x Auszubildender & 3                 & 180,00                 & 135,00                   & 315,00             \\ \hline
-    Code-Review            & 1 x Senior Entwickler                      & 4                 & 100,00                 & 60,00                    & 160,00             \\ \hline
-    Abnahme                & 2 x Senior Entwickler                      & 1                 & 50,00                  & 30,00                    & 80,00              \\ \hline
-    \multicolumn{5}{|r|}{\textbf{Projektkosten gesamt}} & \textbf{2.305,00} \\ \hline
+    Entwicklungskosten     & 1 x Auszubildender                  & 80                & 934,4                 & 1.200                 & 2.134,4           \\ \hline
+    Fachgespräch           & 2 x Senior Entwickler\newline 1 x Auszubildender & 3                 & 321,18                 & 135,00                   & 456,18             \\ \hline
+    Code-Review            & 1 x Senior Entwickler                      & 4                 & 190,76                 & 60,00                    & 250,76             \\ \hline
+    Abnahme                & 2 x Senior Entwickler                      & 1                 & 95,38                  & 30,00                    & 125,38              \\ \hline
+    \multicolumn{5}{|r|}{\textbf{Projektkosten gesamt}} & \textbf{2.966,72} \\ \hline
     \end{tabular*}
     \caption{Kostenaufstellung}
     \label{tab:Kostenaufstellung}
@@ -74,22 +74,31 @@ Durch die Automatisierung des Übertragungsprozesses ließe sich erhebliche Bear
 
 Im \Anhang{app:User} ist dargestellt, dass wir monatlich etwa 150 neue Benutzer hinzugewinnen. Für jeden neuen Benutzer werden etwa 5 Minuten benötigt, um ihnen die relevanten Informationen zu internen Prozessen und Dokumentationsstandorten bereitzustellen und sie in die Teamgruppe hinzuzufügen. Durch den Automatisierungsprozess kann dieser Zeitaufwand vollständig eingespart werden.
 
-Bei einer durchschnittlichen Zeiteinsparung von 5 Minuten pro Benutzer ergibt sich eine jährliche Einsparung von etwa 458 Stunden.
-
 Multipliziert man die monatlichen neuen Benutzer (150) mit den 5 Minuten pro Benutzer, ergibt das jährlich:
 
 \[
-150 \, \text{Benutzer/Monat} \times 5 \, \text{Minuten/Benutzer} \times 12 \, \text{Monate} = 9000 \, \text{Minuten/Jahr} \quad \text{oder} \quad 150 \, \text{Stunden/Jahr}
+150 \, \text{Benutzer} \times 5 \, \text{Minuten} \times 12 \, \text{Monate} = 9000 \, \text{Minuten/Jahr} \quad \text{oder} \quad 150 \, \text{Stunden/Jahr}
 \]
 
-Das führt zu einer zusätzlichen Einsparung von 150 Stunden pro Jahr, was insgesamt zu einer jährlichen Einsparung von:
+Da der Onboarding-Prozess meist von Senior-Entwicklern durchgeführt wird, wird für die Berechnung der Einsparungen der Stundensatz eines Senior Entwicklers von \eur{47,69} verwendet. Das führt zu einer jährlichen Einsparung von:
 
 \[
-\text{Einsparung} = (458 \, \text{Stunden} + 150 \, \text{Stunden}) \times \eur{45,86} \approx \eur{24.320}
+\text{Einsparung} = 150 \, \text{Stunden} \times \eur{47,69} \approx \eur{7.153,5}
 \]
 
-Die Amortisationsdauer des Projekts beträgt somit etwa 7 Wochen, was die wirtschaftliche Effizienz des Projekts verdeutlicht.
-ationsdauer des Projekts beträgt somit etwa 7 Wochen, was es zu einer sehr kosteneffizienten Maßnahme macht.
+Die Amortisationsdauer des Projekts kann berechnet werden als:
+
+\[
+\text{Amortisationsdauer (in Jahren)} = \frac{\text{Anschaffungskosten}}{\text{jährliche Einsparung}} = \frac{2.966,72 \, \text{€}}{7.153,5 \, \text{€}} \approx 0,415 \, \text{Jahre}
+\]
+
+Um die Amortisationsdauer in Tagen zu erhalten, multiplizieren wir mit 365:
+
+\[
+\text{Amortisationsdauer (in Tagen)} \approx 0,415 \, \text{Jahre} \times 365 \, \text{Tage/Jahr} \approx 151 \, \text{Tage}
+\]
+
+Die Amortisationsdauer des Projekts beträgt somit etwa 151 Tage, was die wirtschaftliche Effizienz des Projekts verdeutlicht.
 
 \subsection{Nicht-monetäre Vorteile}
 \label{sec:Nutzwertanalyse}
