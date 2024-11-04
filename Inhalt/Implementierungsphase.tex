@@ -26,17 +26,16 @@ Die \hyperlink{MessageAttributes}{\textcolor{AOBlau}{Message Attributes}} spiele
 
 Im Rahmen der Implementierung des Dev-Kickstarter wurde eine robuste Architektur entworfen, die es ermöglicht, \textbf{user\_create} Events zu verarbeiten und Aktionen wie das Versenden von Willkommens-E-Mails und das Hinzufügen neuer Benutzer zu \hyperlink{MicrosoftTeams}{\textcolor{AOBlau}{Microsoft Teams}}-Gruppen automatisiert auszuführen.
 
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[scale=0.5]{dev-kickstarterOnly.drawio.png}
-    \caption{Implementierung des Dev-Kickstarter}
-\end{figure}
-
 Das \texttt{Kickstarter}-Struct sowie die Initialisierung der erforderlichen Komponenten, wie dem \hyperlink{AWSSESClient}{\textcolor{AOBlau}{AWS SES-Client}}, \hyperlink{SQSConsumer}{\textcolor{AOBlau}{SQS-Consumer}} und \hyperlink{GraphClient}{\textcolor{AOBlau}{Microsoft Graph-Client}}, wurden gemäß den Anforderungen definiert. Der \hyperlink{SQSConsumer}{\textcolor{AOBlau}{SQS-Consumer}} empfängt Nachrichten aus einer \hyperlink{SQS}{\textcolor{AOBlau}{SQS Queues}}, die mit \hyperlink{FilterPolicies}{\textcolor{AOBlau}{Filter Policies}} erstellt wurde, um nur relevante Ereignisse zu verarbeiten.\footnote{AWS - Amazon Simple Queue Service Documentation, \cite{aws2023sqs}.} Die Definition der \texttt{Kickstarter}-Struct ist im \Anhang{app:kickStruct} zu finden.
 
 Nach dem Empfang einer Nachricht wird die \hyperlink{Payload}{\textcolor{AOBlau}{Payload}} asynchron verarbeitet. Dabei wird die E-Mail-Adresse des Benutzers extrahiert, um eine Willkommens-E-Mail über den \hyperlink{AWSSESClient}{\textcolor{AOBlau}{AWS SES-Dienst}}\footnote{AWS - Amazon Simple Email Service Documentation, \cite{aws2023ses}.} zu versenden. Anschließend wird der Benutzer automatisch zu einer definierten \hyperlink{MicrosoftTeams}{\textcolor{AOBlau}{Microsoft Teams}}-Gruppe hinzugefügt, indem die \hyperlink{MicrosoftGraphAPI}{\textcolor{AOBlau}{Microsoft Graph API}} verwendet wird.
 Der zugehörige Code befindet sich im \Anhang{app:kickMain}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{dev-kickstarterOnly.drawio.png}
+    \caption{Implementierung des Dev-Kickstarter}
+\end{figure}
 
 \subsection{Implementierung der E-Mail}
 \label{sec:ImplementierungGeschaeftslogik}
