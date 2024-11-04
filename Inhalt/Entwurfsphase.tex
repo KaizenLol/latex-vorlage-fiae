@@ -6,11 +6,11 @@
 \label{sec:Zielplattform}
 
 Aus der Ist-Analyse ging hervor, dass wir zwei wesentliche Schnittstellen benötigen, um die Anforderun-
-gen des Projekts zu erfüllen. Erstens eine \hyperlink{GitLabSystemhooks}{\textcolor{AOBlau}{GitLab System Hook}}, die \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} an ein \hyperlink{SNS}{\textcolor{AOBlau}{Amazon Simple Notification Service (SNS)}} Topic sendet. Zweitens eine Anwendung, die spezifische Events aus einer \hyperlink{SQS}{\textcolor{AOBlau}{Amazon Simple Queue Service (SQS)}} Queue konsumiert und darauf reagiert, wie die Verarbeitung von \texttt{user\_create} \hyperlink{GitLabEvent}{\textcolor{AOBlau}{Events}}. Beide Schnittstellen haben wir in \hyperlink{Go}{\textcolor{AOBlau}{Go}} entwickelt, um unsere bestehende Expertise zu nutzen und den Entwicklungsprozess zu beschleunigen.
+gen des Projekts zu erfüllen. Erstens eine \hyperlink{GitLabSystemhooks}{\textcolor{AOBlau}{GitLab System Hook}}, die \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} an ein \hyperlink{SNS}{\textcolor{AOBlau}{Amazon Simple Notification Service (SNS)}} Topic sendet. Zweitens eine Anwendung, der \texttt{Dev-Kickstarter}, der spezifische Events aus einer \hyperlink{SQS}{\textcolor{AOBlau}{Amazon Simple Queue Service (SQS)}} Queue konsumiert und darauf reagiert, wie die Verarbeitung von \texttt{user\_create} \hyperlink{GitLabEvent}{\textcolor{AOBlau}{Events}}. Beide Schnittstellen haben wir in \hyperlink{Go}{\textcolor{AOBlau}{Go}} entwickelt, um unsere bestehende Expertise zu nutzen und den Entwicklungsprozess zu beschleunigen.
 
 Die Wahl der Programmiersprache \hyperlink{Go}{\textcolor{AOBlau}{Go}}\footnote{The IT Solutions - How Golang is Perfect for Cloud Native Applications, \cite{Go}.} basiert auf einer Reihe von technischen und praktischen Überlegungen. Da \hyperlink{Go}{\textcolor{AOBlau}{Go}} die primär in unserer Abteilung verwendete Programmiersprache ist und das Team über umfangreiche Erfahrung damit verfügt, konnten wir die Einarbeitungszeit minimieren und effizient arbeiten.
 
-Für die Bereitstellung der Anwendung haben wir uns für \hyperlink{AWS}{\textcolor{AOBlau}{Amazon Web Services (AWS)}} entschieden. \hyperlink{AWS}{\textcolor{AOBlau}{AWS}} bietet eine breite Palette an Diensten, die unseren Projektanforderungen ideal entsprechen, und ist bereits tief in den Prozessen unseres Unternehmens verankert. Diese Vertrautheit mit \hyperlink{AWS}{\textcolor{AOBlau}{AWS}} ermöglicht eine reibungslose Implementierung und die Nutzung bestehender Best Practices und interner Ressourcen.
+Für die Bereitstellung der Anwendung haben wir uns für \hyperlink{AWS}{\textcolor{AOBlau}{Amazon Web Services (AWS)}} entschieden. \hyperlink{AWS}{\textcolor{AOBlau}{AWS}} bietet eine breite Palette an Diensten, die unseren Projektanforderungen ideal entsprechen, und ist bereits tief in den Prozessen unseres Unternehmens verankert. Diese Vertrautheit mit \hyperlink{AWS}{\textcolor{AOBlau}{AWS}} ermöglicht eine reibungslose Implementierung und die Nutzung bestehender \hyperlink{BestPractices}{\textcolor{AOBlau}{Best Practices}} und interner Ressourcen.
 
 Für die zentrale Erfassung und Verarbeitung der \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} nutzen wir \hyperlink{SNS}{\textcolor{AOBlau}{AWS SNS}} in Kombination mit \hyperlink{SQS}{\textcolor{AOBlau}{AWS SQS}}. Der \hyperlink{SNS}{\textcolor{AOBlau}{SNS}}-Dienst sammelt die relevanten \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} und verteilt sie über \hyperlink{SQS}{\textcolor{AOBlau}{SQS}} an verschiedene Anwendungen. Diese Architektur garantiert eine skalierbare und effiziente Verarbeitung der Events.
 
@@ -18,9 +18,9 @@ Für den Versand von E-Mails setzen wir \hyperlink{SES}{\textcolor{AOBlau}{AWS S
 
 Die Schnittstellen selbst werden in einem bestehenden \hyperlink{EKS}{\textcolor{AOBlau}{Amazon Elastic Kubernetes Service (EKS)}} Cluster bereitgestellt, der bereits für andere Anwendungen in unserer Abteilung genutzt wird. Durch die Wiederverwendung dieser Infrastruktur können wir zusätzliche Ressourcen sparen und den Verwal-
 tungsaufwand minimieren. Der Soll-Zustand wird als Aktivitätsdiagramm in Anhang \ref{app:Akti} dargestellt.
+\clearpage
 
-
-\begin{figure}[h]
+\begin{figure}[h!]
 	\centering
 	\includegraphics[scale=0.5]{final-Architektur.png}
 	\caption{Finaler Entwurf des Infrastruktur-Designs und Soll-Zustand}

@@ -11,15 +11,15 @@ Die fertige \hyperlink{GitCommit}{\textcolor{AOBlau}{yaml}}-Datei wurde dann in 
 
 Ein Beispiel für die verwendete \hyperlink{YAML}{\textcolor{AOBlau}{yaml}}-Konfiguration kann im \Anhang{app:yamlFile} eingesehen werden.
 
-\subsection{AWS-Deployment}
+\subsection{AWS Deployment}
 \label{sec:AWSDeployment}
 
-Für das AWS-Deployment wurden die erforderlichen Infrastrukturkomponenten in der AWS-Umgebung konfiguriert. Dazu gehören \hyperlink{SNS}{\textcolor{AOBlau}{Amazon SNS}} zur Kommunikation und \hyperlink{SQS}{\textcolor{AOBlau}{Amazon SQS}} zur Nachrichtenverarb-
+Für das AWS Deployment wurden die erforderlichen Infrastrukturkomponenten in der AWS Umgebung konfiguriert. Dazu gehören \hyperlink{SNS}{\textcolor{AOBlau}{Amazon SNS}} zur Kommunikation und \hyperlink{SQS}{\textcolor{AOBlau}{Amazon SQS}} zur Nachrichtenverarb-
 eitung. 
 
 Die Bereitstellung dieser Ressourcen erfolgte mithilfe von \hyperlink{InfrastructureAsCode}{\textcolor{AOBlau}{Infrastructure as Code}} mit \hyperlink{Terraform}{\textcolor{AOBlau}{Terraform}}.\footnote{Spacelift - Infrastructure as Code, \cite{Iac}.} Dabei wurden \hyperlink{SNS}{\textcolor{AOBlau}{SNS-Topics}} und \hyperlink{SQS}{\textcolor{AOBlau}{SQS-Queues}} eingerichtet, um die Kommunikation zwischen den Diensten zu ermöglichen. Eine \hyperlink{FilterPolicies}{\textcolor{AOBlau}{Filter-Policy}} wurde verwendet, um sicherzustellen, dass nur spezifische Ereignisse, wie das Erstellen eines Benutzers (eventName: \texttt{user\_create}), an die \hyperlink{SQS}{\textcolor{AOBlau}{SQS-Queue}} weitergeleitet werden. 
 
 Zusätzlich wurde eine \hyperlink{SES}{\textcolor{AOBlau}{IAM-Policy}} erstellt, die dem Dev-Kickstarter die erforderlichen Berechtigungen gewährt, um E-Mails über \hyperlink{SES}{\textcolor{AOBlau}{Amazon SES}} zu senden und Nachrichten aus der \hyperlink{SQS}{\textcolor{AOBlau}{SQS-Queue}} zu empfangen. 
 
-Die \hyperlink{Terraform}{\textcolor{AOBlau}{Terraform}}-Ressourcen sind in einem internen Repository gespeichert. Ein Beispiel für die verwendet-
-en \hyperlink{Terraform}{\textcolor{AOBlau}{Terraform}}-Ressourcen kann im \Anhang{app:terraform} eingesehen werden.
+Die \hyperlink{Terraform}{\textcolor{AOBlau}{Terraform}} Ressourcen sind in einem internen Repository gespeichert. Ein Beispiel für die verwendet-
+en \hyperlink{Terraform}{\textcolor{AOBlau}{Terraform}} Ressourcen kann im \Anhang{app:terraform} eingesehen werden.

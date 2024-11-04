@@ -6,14 +6,16 @@
 \subsection{Ist-Analyse}
 \label{sec:IstAnalyse}
 
-\subsection{Ist-Analyse}
-\label{sec:IstAnalyse}
+Der bisherige \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboarding}}-Prozess bringt für neue Mitarbeiter die Herausforderung mit sich, dass zentrale Informationen über interne Abläufe, wie die Standorte von Dokumentationen, genutzte Techno-
+logien und wichtige Einstiegshilfen, nicht rechtzeitig bereitgestellt werden. Obwohl eine Entwicklerplatt-
+form existiert, die alle relevanten Dokumentationen bündelt, wird sie von neuen Entwicklern häufig erst spät entdeckt. Zusätzlich sind neue Mitarbeiter oft nicht in die relevanten Microsoft Teams Gruppen eingebunden, was die Kommunikation erschwert und den Zugang zu essenziellen Informationen verzög-
+ert.
 
-Der bisherige \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboarding}}-Prozess bringt für neue Mitarbeiter die Herausforderung mit sich, dass zentrale Informationen über interne Abläufe, wie die Standorte von Dokumentationen, genutzte Technologien und wichtige Einstiegshilfen, nicht rechtzeitig bereitgestellt werden. Obwohl eine Entwicklerplattform existiert, die alle relevanten Dokumentationen bündelt, wird sie von neuen Entwicklern häufig erst spät entdeckt. Zusätzlich sind neue Mitarbeiter oft nicht in die relevanten Microsoft Teams-Gruppen eingebunden, was die Kommunikation erschwert und den Zugang zu essenziellen Informationen verzögert.
+Da alle neuen Entwickler irgendwann in unserem \hyperlink{GitLab}{\textcolor{AOBlau}{GitLab}}-System arbeiten, bietet sich hier eine Möglich-
+keit, den \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboarding}}-Prozess zu automatisieren. Aktuell fehlen jedoch automatisierte Abläufe, die neue Mitarbeiter reibungslos in die vorhandenen Systeme integrieren.
 
-Da alle neuen Entwickler irgendwann in unserem \hyperlink{GitLab}{\textcolor{AOBlau}{GitLab}}-System arbeiten, bietet sich hier eine Möglichkeit, den \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboarding}}-Prozess zu automatisieren. Aktuell fehlen jedoch automatisierte Abläufe, die neue Mitarbeiter reibungslos in die vorhandenen Systeme integrieren.
-
-Um dieses Problem zu beheben, haben wir beschlossen, einen Service zu entwickeln, der auf \texttt{user\_create} Events lauscht und entsprechend reagiert. Zu Beginn des Projekts waren bereits drei separate \hyperlink{GitLabSystemhooks}{\textcolor{AOBlau}{Systemhooks}} im Einsatz. Daher fiel die Entscheidung, eine zentrale \hyperlink{GitLabSystemhooks}{\textcolor{AOBlau}{Systemhook}} zu entwickeln, die alle \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} an ein zentrales \hyperlink{SNS}{\textcolor{AOBlau}{AWS SNS Topic}} (Simple Notification Service) weiterleitet. Von dort aus können \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} von \hyperlink{SQS}{\textcolor{AOBlau}{SQS Queues}} (Simple Queue Service) konsumiert werden und mithilfe Filterregeln werden die \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} spezifiziert.
+Um dieses Problem zu beheben, haben wir beschlossen, einen Service namens \texttt{Dev-Kickstarter} zu entwickeln, der auf \texttt{user\_create} Events lauscht und entsprechend reagiert. Zu Beginn des Projekts waren bereits drei separate \hyperlink{GitLabSystemhooks}{\textcolor{AOBlau}{Systemhooks}} im Einsatz. Daher fiel die Entscheidung, eine zentrale \hyperlink{GitLabSystemhooks}{\textcolor{AOBlau}{Systemh-
+ook}} zu entwickeln, die alle \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} an ein zentrales \hyperlink{SNS}{\textcolor{AOBlau}{AWS SNS Topic}} (Simple Notification Service) weiterleitet. Dort können verschiedene Anwendungen sowie unser \texttt{Dev-Kickstarter}, \hyperlink{GitLabEvent}{\textcolor{AOBlau}{GitLab Events}} über SQS Queues (Simple Queue Service) konsumieren und mithilfe von Filterregeln spezifizieren.
 
 
 
@@ -43,15 +45,19 @@ Ein Auszubildender im dritten Lehrjahr verdient laut Tarifvertrag monatlich 1486
 \end{align}
 
 
-Für die Mitarbeit eines Senior Entwicklers, der für Fachgespräche konsultiert wurde, wird ein monatliches Gehalt von 6069 € zugrunde gelegt, was einem Stundenlohn von etwa 45,86 € ergibt:
+Für die Mitarbeit eines Senior Entwicklers, der für Fachgespräche konsultiert wurde, wird ein monatli-
+ches Gehalt von 6069 € zugrunde gelegt, was einem Stundenlohn von etwa 45,86 € ergibt:
 
 \begin{align}
     \frac{(6069 \, \text{€} \cdot 1,21)}{20 \, \text{Tage/Monat} \cdot 7.7 \, \text{Stunden/Tag}} &= \frac{7.343,49 \, \text{€/Monat}}{154 \, \text{Stunden/Monat}} \tag{1} \\
     &\approx 47,69 \, \text{€/Stunde} \tag{2}
 \end{align}
 
-Zusätzlich zu den Personalkosten werden pauschale Ressourcenkosten von 15 € pro Stunde berücksichtigt, um die Nutzung von Büroarbeitsplätzen, Hardware, Software und Strom abzudecken. Der Stundensatz für einen Auszubildenden beläuft sich auf 10,96 €, während der eines Senior Entwicklers 45,86 € beträgt. Für die Ressourcennutzung wird ein einheitlicher Stundensatz von 15 € angesetzt. Die nachfolg-
-ende Tabelle zeigt eine detaillierte Übersicht der Projektkosten für die einzelnen Arbeitsschritte.
+Zusätzlich zu den Personalkosten werden pauschale Ressourcenkosten von 15 € pro Stunde berücksicht-
+igt, um die Nutzung von Büroarbeitsplätzen, Hardware, Software und Strom abzudecken. Der Stunden-
+satz für einen Auszubildenden beläuft sich auf 11,68 €, während der eines Senior Entwicklers 47,69 € beträgt. Für die Ressourcennutzung wird ein einheitlicher Stundensatz von 15 € angesetzt. Die nachfolg-
+ende Tabelle zeigt eine detaillierte Übersicht der Projektkosten für die einzelnen Arbeitsschr-
+itte.
 \begin{table}[h!]
     \centering
     \footnotesize % Kleinere Schriftgröße
@@ -76,7 +82,8 @@ ende Tabelle zeigt eine detaillierte Übersicht der Projektkosten für die einze
 \subsubsection{Amortisationsdauer}
 \label{sec:Amortisationsdauer}
 
-Im folgenden Abschnitt soll ermittelt werden, ab welchem Zeitpunkt sich die Entwicklung der Anwendung amortisiert hat. Dieser Wert ermöglicht es, die wirtschaftliche Sinnhaftigkeit des Projekts zu bewerten und zu erkennen, ob sich durch die Umsetzung langfristige Kostenvorteile ergeben. Die Amortisationsdau-
+Im folgenden Abschnitt soll ermittelt werden, ab welchem Zeitpunkt sich die Entwicklung der Anwend-
+ung amortisiert hat. Dieser Wert ermöglicht es, die wirtschaftliche Sinnhaftigkeit des Projekts zu bewerten und zu erkennen, ob sich durch die Umsetzung langfristige Kostenvorteile ergeben. Die Amortisationsdau-
 er wird berechnet, indem die Anschaffungskosten durch die laufende Kostenersparnis geteilt werden, die das neue Produkt erzielt. 
 
 Durch die Automatisierung des Übertragungsprozesses ließe sich erhebliche Bearbeitungszeit einsparen, was zu einer Reduzierung der Personalkosten führt.
@@ -112,6 +119,8 @@ Die Amortisationsdauer des Projekts beträgt somit etwa 151 Tage, was die wirtsc
 \subsection{Nicht-monetäre Vorteile}
 \label{sec:Nutzwertanalyse}
 
-Die Wirtschaftlichkeitsanalyse hat bereits eine ausreichende Grundlage für die Realisierung des Projekts geliefert, sodass auf eine detaillierte Analyse nicht-monetärer Vorteile verzichtet wird. Allerdings sind die qualitativen Verbesserungen, die das Projekt mit sich bringt, von großer Bedeutung.
+Die Wirtschaftlichkeitsanalyse hat bereits eine ausreichende Grundlage für die Realisierung des Proje-
+kts geliefert, sodass auf eine detaillierte Analyse nicht-monetärer Vorteile verzichtet wird. Allerdings sind die qualitativen Verbesserungen, die das Projekt mit sich bringt, von großer Bedeutung.
 
-Diese unmittelbare Verfügbarkeit von Informationen führt dazu, dass neue Teammitglieder schneller produktiv werden können und sich auf ihre Kernaufgaben konzentrieren, anstatt Zeit mit administrativen Tätigkeiten zu verlieren. Zudem wird die Belastung der bestehenden Entwicklerteams deutlich verringert, da weniger Zeit für die Einrichtung und Verwaltung von Benutzerzugängen aufgewendet werden muss. Diese Effekte tragen nicht nur zu einer besseren Zusammenarbeit innerhalb der Teams bei, sondern fördern auch eine angenehme Arbeitsatmosphäre, in der sich alle Teammitglieder auf ihre wichtigen Aufgaben konzentrieren können.
+Diese unmittelbare Verfügbarkeit von Informationen führt dazu, dass neue Teammitglieder schneller produktiv werden können und sich auf ihre Kernaufgaben konzentrieren, anstatt Zeit mit administra-
+tiven Tätigkeiten zu verlieren. Zudem wird die Belastung der bestehenden Entwicklerteams deutlich verringert, da weniger Zeit für die Einrichtung und Verwaltung von Benutzerzugängen aufgewendet werden muss. Diese Effekte tragen nicht nur zu einer besseren Zusammenarbeit innerhalb der Teams bei, sondern fördern auch eine angenehme Arbeitsatmosphäre, in der sich alle Teammitglieder auf ihre wichtigen Aufgaben konzentrieren können.
