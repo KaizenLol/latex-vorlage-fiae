@@ -6,7 +6,8 @@
 \subsection{Ist-Analyse}
 \label{sec:IstAnalyse}
 
-Der bisherige \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboarding}}-Prozess stellt neue Mitarbeiter vor die Herausforderung, dass zentrale Informationen über interne Prozesse, wie die Standorte von Dokumentationen, eingesetzte Technologien und wichtige Einstiegshilfen, nicht rechtzeitig zur Verfügung stehen. Obwohl wir eine Entwicklerplattform anbieten, auf der alle notwendigen Dokumentationen gesammelt sind, entdecken neue Entwickler diese häufig erst spät. Zudem sind neue Mitarbeiter oft nicht in die relevanten Microsoft Teams-Kanäle integriert, was die Kommunikation und den Zugriff auf wichtige Informationen zusätzlich verzögert.
+Der bisherige \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboarding}}-Prozess stellt neue Mitarbeiter vor die Herausforderung, dass zentrale Informationen über interne Prozesse, wie die Standorte von Dokumentationen, eingesetzte Technologien und wichtige Einstiegshilfen, nicht rechtzeitig zur Verfügung stehen. Obwohl wir eine Entwicklerplatt-
+form anbieten, auf der alle notwendigen Dokumentationen gesammelt sind, entdecken neue Entwickler diese häufig erst spät. Zudem sind neue Mitarbeiter oft nicht in die relevanten Microsoft Teams-Kanäle integriert, was die Kommunikation und den Zugriff auf wichtige Informationen zusätzlich verzögert.
 
 Da jeder neue Entwickler früher oder später in unserem \hyperlink{GitLab}{\textcolor{AOBlau}{GitLab}} System arbeitet, besteht hier die Chance, den \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboarding}}-Prozess zu automatisieren. Momentan fehlen jedoch automatisierte Prozesse, die neue Entwickler nahtlos in die vorhandenen Systeme einbinden.
 
@@ -16,17 +17,20 @@ Um dieses Problem zu lösen, haben wir beschlossen, eine \hyperlink{GitLabSystem
 \subsection{Wirtschaftlichkeitsanalyse}
 \label{sec:Wirtschaftlichkeitsanalyse}
 
-Das Projekt zur Automatisierung des \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboardings}} ist für die TUI Group von großem wirtschaftlichen Nutzen. Die Automatisierung sorgt dafür, dass neue Entwickler sofort Zugriff auf alle relevanten Ressourcen erhalten, ohne dass manuelle Eingriffe notwendig sind. Dadurch werden sowohl Verzögerungen als auch die Gefahr, Mitarbeiter zu übersehen oder Zugänge zu vergessen, deutlich reduziert. Dies steigert nicht nur die Effizienz der neuen Entwickler, sondern entlastet auch das IT-Team, das sich auf wichtigere Aufgaben konzentrieren kann. Durch die Einsparung von Zeit und die Reduktion der Arbeitsunterbrechungen werden langfristig Kosten gesenkt und die Produktivität gesteigert.
+Das Projekt zur Automatisierung des \hyperlink{Onboarding}{\textcolor{AOBlau}{Onboardings}} ist für die TUI Group von großem wirtschaftlichen Nutzen. Die Automatisierung sorgt dafür, dass neue Entwickler sofort Zugriff auf alle relevanten Ressourcen erhalten, ohne dass manuelle Eingriffe notwendig sind. Dadurch werden sowohl Verzögerun-
+gen als auch die Gefahr, Mitarbeiter zu übersehen oder Zugänge zu vergessen, deutlich reduziert. Dies steigert nicht nur die Effizienz der neuen Entwickler, sondern entlastet auch das IT-Team, das sich auf wichtigere Aufgaben konzentrieren kann. Durch die Einsparung von Zeit und die Reduktion der Arbeitsunterbrechungen werden langfristig Kosten gesenkt und die Produktivität gesteigert.
 
 \subsubsection{\gqq{Make or Buy}-Entscheidung}
 \label{sec:MakeOrBuyEntscheidung}
 
-Es existiert keine fertige Softwarelösung, die die spezifischen Anforderungen der TUI Group vollständig abdeckt. Besonders die Integration mit den bereits genutzten \hyperlink{GitLabSystemHooks}{\textcolor{AOBlau}{GitLab-Systemhooks}} und die spezifischen Anpassungen, die für die internen Abläufe notwendig sind, erfordern eine stark angepasste, maßgeschneiderte Lösung. Aus diesem Grund wurde entschieden, das Projekt intern umzusetzen, um eine optimale Integration in die bestehende Infrastruktur sowie eine hohe Flexibilität für zukünftige Anpassungen sicherzustellen.
+Es existiert keine fertige Softwarelösung, die die spezifischen Anforderungen der TUI Group vollständig abdeckt. Besonders die Integration mit den bereits genutzten \hyperlink{GitLabSystemHooks}{\textcolor{AOBlau}{GitLab-Systemhooks}} und die spezifischen Anpassungen, die für die internen Abläufe notwendig sind, erfordern eine stark angepasste, maßgeschn-
+eiderte Lösung. Aus diesem Grund wurde entschieden, das Projekt intern umzusetzen, um eine optimale Integration in die bestehende Infrastruktur sowie eine hohe Flexibilität für zukünftige Anpassungen sicherzustellen.
 
 \subsubsection{Projektkosten}
 \label{sec:Projektkosten}
 
-Die Kosten für die Durchführung des Projekts setzen sich aus Personal- und Ressourcenkosten zusammen. Bei der Berechnung des Stundensatzes sowohl für Auszubildende als auch für Senior Entwickler werden Arbeitgeberanteile und Sozialversicherungen berücksichtigt, um den tatsächlichen Stundensatz realistisch darzustellen.
+Die Kosten für die Durchführung des Projekts setzen sich aus Personal- und Ressourcenkosten zusamm-
+en. Bei der Berechnung des Stundensatzes sowohl für Auszubildende als auch für Senior Entwickler werden Arbeitgeberanteile und Sozialversicherungen berücksichtigt, um den tatsächlichen Stundensatz realistisch darzustellen.
 \newline
 Ein Auszubildender im dritten Lehrjahr verdient laut Tarifvertrag monatlich 1486 € brutto, was einem Stundenlohn von etwa 11,68 € entspricht:
 
@@ -43,7 +47,8 @@ Für die Mitarbeit eines Senior Entwicklers, der für Fachgespräche konsultiert
     &\approx 47,69 \, \text{€/Stunde} \tag{2}
 \end{align}
 
-Zusätzlich zu den Personalkosten werden pauschale Ressourcenkosten von 15 € pro Stunde berücksichtigt, um die Nutzung von Büroarbeitsplätzen, Hardware, Software und Strom abzudecken. Der Stundensatz für einen Auszubildenden beläuft sich auf 10,96 €, während der eines Senior Entwicklers 45,86 € beträgt. Für die Ressourcennutzung wird ein einheitlicher Stundensatz von 15 € angesetzt. Die nachfolgende Tabelle zeigt eine detaillierte Übersicht der Projektkosten für die einzelnen Arbeitsschritte.
+Zusätzlich zu den Personalkosten werden pauschale Ressourcenkosten von 15 € pro Stunde berücksichtigt, um die Nutzung von Büroarbeitsplätzen, Hardware, Software und Strom abzudecken. Der Stundensatz für einen Auszubildenden beläuft sich auf 10,96 €, während der eines Senior Entwicklers 45,86 € beträgt. Für die Ressourcennutzung wird ein einheitlicher Stundensatz von 15 € angesetzt. Die nachfolg-
+ende Tabelle zeigt eine detaillierte Übersicht der Projektkosten für die einzelnen Arbeitsschritte.
 \begin{table}[h!]
     \centering
     \footnotesize % Kleinere Schriftgröße
@@ -68,7 +73,8 @@ Zusätzlich zu den Personalkosten werden pauschale Ressourcenkosten von 15 € p
 \subsubsection{Amortisationsdauer}
 \label{sec:Amortisationsdauer}
 
-Im folgenden Abschnitt soll ermittelt werden, ab welchem Zeitpunkt sich die Entwicklung der Anwendung amortisiert hat. Dieser Wert ermöglicht es, die wirtschaftliche Sinnhaftigkeit des Projekts zu bewerten und zu erkennen, ob sich durch die Umsetzung langfristige Kostenvorteile ergeben. Die Amortisationsdauer wird berechnet, indem die Anschaffungskosten durch die laufende Kostenersparnis geteilt werden, die das neue Produkt erzielt. 
+Im folgenden Abschnitt soll ermittelt werden, ab welchem Zeitpunkt sich die Entwicklung der Anwendung amortisiert hat. Dieser Wert ermöglicht es, die wirtschaftliche Sinnhaftigkeit des Projekts zu bewerten und zu erkennen, ob sich durch die Umsetzung langfristige Kostenvorteile ergeben. Die Amortisationsdau-
+er wird berechnet, indem die Anschaffungskosten durch die laufende Kostenersparnis geteilt werden, die das neue Produkt erzielt. 
 
 Durch die Automatisierung des Übertragungsprozesses ließe sich erhebliche Bearbeitungszeit einsparen, was zu einer Reduzierung der Personalkosten führt.
 
