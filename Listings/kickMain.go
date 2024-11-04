@@ -15,16 +15,19 @@ func (k *Kickstarter) handler(ctx context.Context, message types.Message) error 
 		return nil
 	}
 
-	k.Logger.Info("sending mail to", slog.String("Email:", userEmail))
-	err = k.sendMail(ctx, userEmail)
-	if err != nil {
-		k.Logger.Error("failed to send email", slog.String("error", err.Error()))
-	}
+	go func() {
+		err := k.sendMail(ctx, userEmail)
+		if err != nil {
+			k.Logger.Error("failed to send email", slog.String("error", err.Error()))
+		}
+	}()
 
-	err = k.addUserToMSTeamsGroup(ctx, userEmail, k.msTeamsGroupId)
-	if err != nil {
-		k.Logger.Error("failed to add user to microsoft group", slog.String("error", err.Error()))
-	}
+	go func() {
+		err := k.addUserToMSTeamsGroup(ctx, userEmail, k.msTeamsGroupId)
+		if err != nil {
+			k.Logger.Error("failed to add user to microsoft group", slog.String("error", err.Error()))
+		}
+	}()
 
 	return nil
 }
@@ -35,11 +38,11 @@ func (k *Kickstarter) sendMail(ctx context.Context, recipient string) error {
 
 	subject := "Let's Get Started in the TUI Engineering World!"
 
-	firstName, lastName := k.getName(recipient)
+	firstName := k.getName(recipient)
 
 	var buf bytes.Buffer
 
-	err := k.emailTemplate.Execute(&buf, templatedata{FirstName: firstName, LastName: lastName})
+	err := k.emailTemplate.Execute(&buf, templatedata{FirstName: firstName})
 	if err != nil {
 		return fmt.Errorf("failed to execute template: %w", err)
 	}
